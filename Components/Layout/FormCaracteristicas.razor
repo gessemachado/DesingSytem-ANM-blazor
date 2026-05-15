@@ -183,11 +183,10 @@
             </MudTooltip>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.TipoFundacao" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("rocha_competente")">Rocha competente (resistência moderada ou alta)</MudRadio>
-            <MudRadio T="string" Value="@("rocha_fraturada")">Rocha fraturada/intemperizada</MudRadio>
-            <MudRadio T="string" Value="@("solo_areia")">Solo (areia ou pedregulho)</MudRadio>
-            <MudRadio T="string" Value="@("solo_argila")">Solo (argila ou silte)</MudRadio>
-            <MudRadio T="string" Value="@("nao_conhecido")">Não conhecido</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Fundação em rocha</MudRadio>
+            <MudRadio T="string" Value="@("1")">1 - Fundação em solo, saprolito ou solos impermeáveis, com investigação indicando solo competente ou tratamento do mesmo</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Fundação em solo, saprolito ou solos impermeáveis, sem investigação indicando solo competente ou sem tratamento do mesmo</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Fundação em solo residual, aluvião, permeável, compressível ou desconhecido</MudRadio>
         </MudRadioGroup>
     </div>
 

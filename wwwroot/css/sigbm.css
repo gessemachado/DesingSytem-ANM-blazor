@@ -231,7 +231,7 @@
     flex-wrap: wrap;
     gap: 4px;
 }
-.ct-radio-group .mud-radio { display: flex; align-items: center; margin-bottom: 2px; }
+.ct-radio-group { display: flex !important; flex-direction: column !important; gap: 2px; }
 .ct-radio-group .mud-radio .mud-button-root { padding: 4px 8px 4px 4px !important; }
 
 /* ── Coord inputs ── */
