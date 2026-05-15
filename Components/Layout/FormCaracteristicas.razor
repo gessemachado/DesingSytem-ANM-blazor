@@ -162,12 +162,10 @@
             </MudTooltip>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.MaterialConstrucao" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("terra_homogenea")">Terra homogênea</MudRadio>
-            <MudRadio T="string" Value="@("enrocamento")">Enrocamento com núcleo argiloso</MudRadio>
-            <MudRadio T="string" Value="@("terra_enrocamento")">Terra/enrocamento</MudRadio>
-            <MudRadio T="string" Value="@("concreto_convencional")">Concreto convencional (CCG/CCR)</MudRadio>
-            <MudRadio T="string" Value="@("rejeito")">Rejeito</MudRadio>
-            <MudRadio T="string" Value="@("outros")">Outros</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Concreto convencional (CCG/CCR)</MudRadio>
+            <MudRadio T="string" Value="@("1")">1 - Terra homogênea, enrocamento com núcleo argiloso ou terra/enrocamento</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Rejeito</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Não identificado</MudRadio>
         </MudRadioGroup>
     </div>
 
@@ -202,11 +200,10 @@
             </MudTooltip>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.MetodoConstrutivo" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("montante")">Montante</MudRadio>
-            <MudRadio T="string" Value="@("jusante")">Jusante</MudRadio>
-            <MudRadio T="string" Value="@("linha_centro")">Linha de centro</MudRadio>
-            <MudRadio T="string" Value="@("nao_se_aplica")">Não se aplica</MudRadio>
-            <MudRadio T="string" Value="@("nao_identificado")">Não identificado</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Jusante, linha de centro (altura > 15m) ou não se aplica</MudRadio>
+            <MudRadio T="string" Value="@("1")">1 - Linha de centro com altura ≤ 15m</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Montante com altura ≤ 15m</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Montante com altura > 15m ou não identificado</MudRadio>
         </MudRadioGroup>
     </div>
 
@@ -222,10 +219,9 @@
             </MudTooltip>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.DrenagemInterna" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("adequada")">Sim, e é adequada ao porte da barragem</MudRadio>
-            <MudRadio T="string" Value="@("inadequada")">Sim, mas é inadequada ao porte da barragem</MudRadio>
-            <MudRadio T="string" Value="@("nao")">Não há drenagem interna</MudRadio>
-            <MudRadio T="string" Value="@("nao_identificado")">Não identificada</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Sim, e é adequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Sim, mas é inadequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Não há drenagem interna ou não identificada</MudRadio>
         </MudRadioGroup>
     </div>
 
@@ -241,10 +237,9 @@
             </MudTooltip>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.DrenagemSuperficial" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("adequada")">Sim, e é adequada ao porte da barragem</MudRadio>
-            <MudRadio T="string" Value="@("inadequada")">Sim, mas é inadequada ao porte da barragem</MudRadio>
-            <MudRadio T="string" Value="@("nao")">Não há drenagem superficial</MudRadio>
-            <MudRadio T="string" Value="@("nao_identificado")">Não identificada</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Sim, e é adequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Sim, mas é inadequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Não há drenagem superficial ou não identificada</MudRadio>
         </MudRadioGroup>
     </div>
 
@@ -257,9 +252,9 @@
             <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT10</span>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.InclinacaoTalude" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("3:1_menor")">Menor que 3H:1V</MudRadio>
-            <MudRadio T="string" Value="@("3:1_igual")">Igual a 3H:1V</MudRadio>
-            <MudRadio T="string" Value="@("3:1_maior")">Maior que 3H:1V</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Maior ou igual a 3H:1V</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Menor que 3H:1V e maior ou igual a 2H:1V</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Menor que 2H:1V</MudRadio>
         </MudRadioGroup>
     </div>
 
@@ -272,9 +267,9 @@
             <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT9</span>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.Instrumentacao" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("adequada")">Sim, e é adequada ao porte da barragem</MudRadio>
-            <MudRadio T="string" Value="@("inadequada")">Sim, mas é inadequada ao porte da barragem</MudRadio>
-            <MudRadio T="string" Value="@("nao")">Não possui instrumentação</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - Sim, e é adequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - Sim, mas é inadequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - Não possui instrumentação</MudRadio>
         </MudRadioGroup>
     </div>
 
@@ -287,11 +282,11 @@
             <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT6</span>
         </div>
         <MudRadioGroup T="string" @bind-Value="Modelo.VazaoProjeto" Class="ct-radio-group">
-            <MudRadio T="string" Value="@("tr10000")">TR ≥ 10.000 anos ou CMP</MudRadio>
-            <MudRadio T="string" Value="@("tr1000")">1.000 anos ≤ TR &lt; 10.000 anos</MudRadio>
-            <MudRadio T="string" Value="@("tr500")">500 anos ≤ TR &lt; 1.000 anos</MudRadio>
-            <MudRadio T="string" Value="@("tr100")">100 anos ≤ TR &lt; 500 anos</MudRadio>
-            <MudRadio T="string" Value="@("tr_menor100")">TR &lt; 100 anos ou sem vertedouro</MudRadio>
+            <MudRadio T="string" Value="@("0")">0 - TR ≥ 10.000 anos ou CMP</MudRadio>
+            <MudRadio T="string" Value="@("1")">1 - 1.000 anos ≤ TR &lt; 10.000 anos</MudRadio>
+            <MudRadio T="string" Value="@("3")">3 - 500 anos ≤ TR &lt; 1.000 anos</MudRadio>
+            <MudRadio T="string" Value="@("5")">5 - 100 anos ≤ TR &lt; 500 anos</MudRadio>
+            <MudRadio T="string" Value="@("7")">7 - TR &lt; 100 anos ou sem vertedouro</MudRadio>
         </MudRadioGroup>
     </div>
 
