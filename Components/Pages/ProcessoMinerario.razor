@@ -26,18 +26,25 @@
     <main class="page-main">
 
         <!-- Vincular processo -->
-        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
-            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Vincular Processo Minerário</MudText>
-            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
-                Informe o número do processo ANM para vincular
-            </MudText>
+        <MudPaper Elevation="1" Class="pa-5 mb-4" Style="border-radius:8px;">
+            <div class="section-header mb-1">
+                <MudIcon Icon="@Icons.Material.Filled.Link" />
+                <span>Vincular Processo Minerário</span>
+            </div>
+            <span class="section-sub">Informe o número do processo ANM (SCUP) para vincular à estrutura</span>
             <div class="add-row">
-                <MudTextField @bind-Value="NovoProcesso" Label="Número do Processo (SCUP)"
+                <MudTextField @bind-Value="NovoProcesso"
+                              Label="Número do Processo"
                               Placeholder="Ex: 800.000/2020"
-                              Variant="Variant.Outlined" Margin="Margin.Dense" Style="flex:1;" />
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Style="flex:1;"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Outlined.Tag" />
                 <MudButton Variant="Variant.Filled" Color="Color.Primary"
                            StartIcon="@Icons.Material.Filled.Link"
-                           @onclick="VincularProcesso" Style="margin-bottom:2px;">
+                           @onclick="VincularProcesso"
+                           Style="margin-bottom:2px;"
+                           Disabled="@string.IsNullOrWhiteSpace(NovoProcesso)">
                     Vincular
                 </MudButton>
             </div>
@@ -47,7 +54,13 @@
         <MudPaper Elevation="1" Style="border-radius:8px;overflow:hidden;" Class="mb-4">
             <MudTable T="ProcessoItem" Items="@Processos" Hover="true" Elevation="0" Dense="false">
                 <ToolBarContent>
-                    <MudText Typo="Typo.subtitle2">Processos vinculados (@Processos.Count)</MudText>
+                    <div class="section-header" style="margin-bottom:0;">
+                        <MudIcon Icon="@Icons.Material.Filled.AccountTree" Style="font-size:18px !important;" />
+                        <span style="font-size:14px;">Processos vinculados</span>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Style="height:20px;">
+                            @Processos.Count
+                        </MudChip>
+                    </div>
                 </ToolBarContent>
                 <HeaderContent>
                     <MudTh>Processo</MudTh>
@@ -56,31 +69,54 @@
                     <MudTh>Área (ha)</MudTh>
                     <MudTh>UF</MudTh>
                     <MudTh>Município</MudTh>
-                    <MudTh></MudTh>
+                    <MudTh Style="width:48px;"></MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd><MudLink Href="#">@context.Numero</MudLink></MudTd>
-                    <MudTd>@context.Substancia</MudTd>
                     <MudTd>
-                        <MudChip T="string" Size="Size.Small" Class="chip-andamento">
+                        <MudLink Href="#" Style="font-weight:600;color:#1351B4;">@context.Numero</MudLink>
+                    </MudTd>
+                    <MudTd>
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <MudAvatar Size="Size.Small"
+                                       Style="width:24px;height:24px;font-size:10px;background:#EEF4FF;color:#1351B4;font-weight:700;">
+                                @context.Substancia[0]
+                            </MudAvatar>
+                            @context.Substancia
+                        </div>
+                    </MudTd>
+                    <MudTd>
+                        <MudChip T="string" Size="Size.Small" Class="@FaseClass(context.Fase)">
                             @context.Fase
                         </MudChip>
                     </MudTd>
                     <MudTd>@context.Area</MudTd>
-                    <MudTd>@context.UF</MudTd>
+                    <MudTd>
+                        <MudChip T="string" Size="Size.Small" Style="background:#F0F0F5;color:#1B1B1B;font-weight:600;">
+                            @context.UF
+                        </MudChip>
+                    </MudTd>
                     <MudTd>@context.Municipio</MudTd>
                     <MudTd>
-                        <MudIconButton Icon="@Icons.Material.Filled.LinkOff" Size="Size.Small"
-                                       Color="Color.Error"
-                                       OnClick="@(() => DesvinculaProcesso(context))" />
+                        <MudTooltip Text="Desvincular processo">
+                            <MudIconButton Icon="@Icons.Material.Filled.LinkOff" Size="Size.Small"
+                                           Color="Color.Error"
+                                           OnClick="@(() => DesvinculaProcesso(context))" />
+                        </MudTooltip>
                     </MudTd>
                 </RowTemplate>
+                <NoRecordsContent>
+                    <div class="empty-state">
+                        <MudIcon Icon="@Icons.Material.Filled.LinkOff" />
+                        <MudText Typo="Typo.subtitle2">Nenhum processo vinculado</MudText>
+                        <MudText Typo="Typo.caption">Use o campo acima para vincular um processo ANM</MudText>
+                    </div>
+                </NoRecordsContent>
             </MudTable>
         </MudPaper>
 
         <!-- Ações -->
         <div class="d-flex justify-end gap-2">
-            <MudButton Variant="Variant.Outlined"
+            <MudButton Variant="Variant.Text" StartIcon="@Icons.Material.Filled.ArrowBack"
                        @onclick='() => Nav.NavigateTo($"/barragem/{Id}/dados-iniciais")'>
                 Voltar
             </MudButton>
@@ -109,8 +145,8 @@
 
     private List<ProcessoItem> Processos =
     [
-        new("800.001/2018", "Ferro", "Concessão de Lavra",       "1.234,56", "MG", "Congonhas"),
-        new("800.002/2020", "Ouro",  "Autorização de Pesquisa",  "345,00",   "MG", "Mariana"),
+        new("800.001/2018", "Ferro", "Concessão de Lavra",      "1.234,56", "MG", "Congonhas"),
+        new("800.002/2020", "Ouro",  "Autorização de Pesquisa", "345,00",   "MG", "Mariana"),
     ];
 
     private void VincularProcesso()
@@ -119,16 +155,28 @@
         {
             Processos.Add(new(NovoProcesso, "—", "Em análise", "0,00", "—", "—"));
             NovoProcesso = "";
+            Snackbar.Add("Processo vinculado com sucesso!", Severity.Success);
         }
     }
 
     private async Task DesvinculaProcesso(ProcessoItem p)
     {
         if (await JS.InvokeAsync<bool>("confirm", $"Deseja desvincular o processo {p.Numero}?"))
+        {
             Processos.Remove(p);
+            Snackbar.Add($"Processo {p.Numero} desvinculado.", Severity.Info);
+        }
     }
 
     private void Salvar() => Snackbar.Add("Processos salvos com sucesso!", Severity.Success);
+
+    private static string FaseClass(string fase) => fase switch
+    {
+        "Concessão de Lavra"     => "chip-concluido",
+        "Autorização de Pesquisa"=> "chip-andamento",
+        "Em análise"             => "chip-pendente",
+        _                        => "chip-andamento"
+    };
 
     private record ProcessoItem(string Numero, string Substancia, string Fase, string Area, string UF, string Municipio);
 }

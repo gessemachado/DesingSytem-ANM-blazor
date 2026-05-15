@@ -18,31 +18,51 @@
     <main class="page-main">
 
         <!-- Localização geográfica -->
-        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
-            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Localização Geográfica</MudText>
-            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
-                Coordenadas da estrutura principal
-            </MudText>
-            <MudGrid>
+        <MudPaper Elevation="1" Class="pa-5 mb-4" Style="border-radius:8px;">
+            <div class="section-header mb-1">
+                <MudIcon Icon="@Icons.Material.Filled.MyLocation" />
+                <span>Localização Geográfica</span>
+            </div>
+            <span class="section-sub">Coordenadas da estrutura principal (eixo da barragem)</span>
+
+            <MudGrid Spacing="3">
                 <MudItem xs="12" md="4">
-                    <MudTextField @bind-Value="Lat" Label="Latitude" Required="true"
-                                  Placeholder="Ex: -19.921"
-                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    <MudTextField @bind-Value="Lat" Label="Latitude"
+                                  Required="true" Placeholder="Ex: -19.921"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Outlined.North" />
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudTextField @bind-Value="Lng" Label="Longitude" Required="true"
-                                  Placeholder="Ex: -43.938"
-                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    <MudTextField @bind-Value="Lng" Label="Longitude"
+                                  Required="true" Placeholder="Ex: -43.938"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Outlined.East" />
                 </MudItem>
                 <MudItem xs="12" md="4">
-                    <MudTextField @bind-Value="Alt" Label="Altitude (m)"
-                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    <MudTextField @bind-Value="Alt" Label="Altitude"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.End" AdornmentText="m" />
                 </MudItem>
             </MudGrid>
-            <!-- Placeholder do mapa -->
+
+            <!-- Preview de coordenadas -->
+            <MudPaper Elevation="0" Class="mt-4 pa-3" Style="background:#F8F8FB;border-radius:6px;border:1px solid #E8E8E8;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <MudIcon Icon="@Icons.Material.Filled.PinDrop" Style="font-size:16px !important;color:#1351B4;" />
+                    <MudText Typo="Typo.caption" Style="font-weight:600;color:#636366;text-transform:uppercase;letter-spacing:.5px;">Coordenadas atuais</MudText>
+                </div>
+                <MudText Style="font-family:monospace !important;font-size:14px;color:#1B1B1B;">
+                    @Lat, @Lng &nbsp;·&nbsp; Alt. @Alt m
+                </MudText>
+            </MudPaper>
+
+            <!-- Mapa placeholder -->
             <div class="mapa-placeholder mt-4">
-                <MudIcon Icon="@Icons.Material.Filled.Map" Style="font-size:40px;opacity:.7;margin-right:8px;" />
-                <MudText>Mapa (Leaflet/Google Maps)</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.Map" Style="font-size:36px;" />
+                <MudText Style="font-size:14px;font-weight:500;">Visualização do mapa</MudText>
+                <MudText Typo="Typo.caption" Style="opacity:.8;">Leaflet / Google Maps será integrado aqui</MudText>
             </div>
         </MudPaper>
 
@@ -50,10 +70,17 @@
         <MudPaper Elevation="1" Style="border-radius:8px;overflow:hidden;" Class="mb-4">
             <MudTable T="PontoGeo" Items="@Pontos" Hover="true" Elevation="0">
                 <ToolBarContent>
-                    <MudText Typo="Typo.subtitle2">Pontos Georreferenciados</MudText>
+                    <div class="section-header" style="margin-bottom:0;">
+                        <MudIcon Icon="@Icons.Material.Filled.Place" Style="font-size:18px !important;" />
+                        <span style="font-size:14px;">Pontos Georreferenciados</span>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Primary" Style="height:20px;">
+                            @Pontos.Count
+                        </MudChip>
+                    </div>
                     <MudSpacer />
-                    <MudButton Variant="Variant.Outlined" Size="Size.Small"
-                               StartIcon="@Icons.Material.Filled.Add" @onclick="AdicionarPonto">
+                    <MudButton Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.AddLocation"
+                               @onclick="AdicionarPonto">
                         Adicionar ponto
                     </MudButton>
                 </ToolBarContent>
@@ -63,26 +90,47 @@
                     <MudTh>Longitude</MudTh>
                     <MudTh>Altitude (m)</MudTh>
                     <MudTh>Tipo</MudTh>
-                    <MudTh></MudTh>
+                    <MudTh Style="width:48px;"></MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd>@context.Nome</MudTd>
-                    <MudTd>@context.Lat</MudTd>
-                    <MudTd>@context.Lng</MudTd>
-                    <MudTd>@context.Alt</MudTd>
-                    <MudTd>@context.Tipo</MudTd>
                     <MudTd>
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small"
-                                       Color="Color.Error"
-                                       OnClick="@(() => RemoverPonto(context))" />
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <MudAvatar Size="Size.Small"
+                                       Style="width:28px;height:28px;font-size:11px;background:#EEF4FF;color:#1351B4;font-weight:700;">
+                                @context.Nome.Replace("P-","")
+                            </MudAvatar>
+                            <strong>@context.Nome</strong>
+                        </div>
+                    </MudTd>
+                    <MudTd><span style="font-family:monospace !important;font-size:13px;">@context.Lat</span></MudTd>
+                    <MudTd><span style="font-family:monospace !important;font-size:13px;">@context.Lng</span></MudTd>
+                    <MudTd>@context.Alt m</MudTd>
+                    <MudTd>
+                        <MudChip T="string" Size="Size.Small" Style="background:#EEF4FF;color:#1351B4;font-weight:500;">
+                            @context.Tipo
+                        </MudChip>
+                    </MudTd>
+                    <MudTd>
+                        <MudTooltip Text="Remover ponto">
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small"
+                                           Color="Color.Error"
+                                           OnClick="@(() => RemoverPonto(context))" />
+                        </MudTooltip>
                     </MudTd>
                 </RowTemplate>
+                <NoRecordsContent>
+                    <div class="empty-state">
+                        <MudIcon Icon="@Icons.Material.Filled.AddLocation" />
+                        <MudText Typo="Typo.subtitle2">Nenhum ponto cadastrado</MudText>
+                        <MudText Typo="Typo.caption">Clique em "Adicionar ponto" para inserir coordenadas</MudText>
+                    </div>
+                </NoRecordsContent>
             </MudTable>
         </MudPaper>
 
         <!-- Ações -->
         <div class="d-flex justify-end gap-2">
-            <MudButton Variant="Variant.Outlined"
+            <MudButton Variant="Variant.Text" StartIcon="@Icons.Material.Filled.ArrowBack"
                        @onclick='() => Nav.NavigateTo($"/barragem/{Id}/dados-iniciais")'>
                 Voltar
             </MudButton>
@@ -118,12 +166,15 @@
     ];
 
     private void AdicionarPonto() =>
-        Pontos.Add(new($"P-0{Pontos.Count + 1}", Lat, Lng, Alt, "Novo"));
+        Pontos.Add(new($"P-{(Pontos.Count + 1):D2}", Lat, Lng, Alt, "Novo ponto"));
 
     private async Task RemoverPonto(PontoGeo p)
     {
         if (await JS.InvokeAsync<bool>("confirm", $"Deseja remover o ponto {p.Nome}?"))
+        {
             Pontos.Remove(p);
+            Snackbar.Add($"Ponto {p.Nome} removido.", Severity.Info);
+        }
     }
 
     private void Salvar() => Snackbar.Add("Dados georreferenciados salvos!", Severity.Success);

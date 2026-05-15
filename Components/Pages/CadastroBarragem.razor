@@ -10,8 +10,8 @@
 {
     <MudAlert Severity="Severity.Warning" Class="sigbm-alert" Dense="true"
               ShowCloseIcon="true" CloseIconClicked="@(() => MostrarAlerta = false)">
-        <strong>Atenção.</strong> Faltam 30 dias para finalizar o cadastro da estrutura @Model.NomeBarragem.
-        O cadastro foi iniciado em 15/01/25 com prazo para conclusão até 14/02/25.
+        <strong>Atenção.</strong> Faltam 30 dias para finalizar o cadastro da estrutura <strong>@Model.NomeBarragem</strong>.
+        Iniciado em 15/01/25 — prazo até 14/02/25.
     </MudAlert>
 }
 
@@ -27,28 +27,33 @@
     <main class="page-main">
 
         <!-- Identificação -->
-        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
-            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Identificação da Barragem</MudText>
-            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
-                Informações básicas de identificação
-            </MudText>
-            <MudGrid>
+        <MudPaper Elevation="1" Class="pa-5 mb-4" Style="border-radius:8px;">
+            <div class="section-header mb-1">
+                <MudIcon Icon="@Icons.Material.Filled.Business" />
+                <span>Identificação da Barragem</span>
+            </div>
+            <span class="section-sub">Informações básicas de identificação da estrutura</span>
+            <MudGrid Spacing="3">
                 <MudItem xs="12" md="6">
                     <MudTextField @bind-Value="Model.NomeBarragem" Label="Nome da Barragem"
-                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Badge" />
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudTextField @bind-Value="Model.Empresa" Label="Empresa Responsável"
-                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.CorporateFare" />
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudTextField @bind-Value="Model.CNPJ" Label="CNPJ"
                                   Required="true" Placeholder="00.000.000/0000-00"
-                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Numbers" />
                 </MudItem>
                 <MudItem xs="12" md="6">
                     <MudSelect T="string" @bind-Value="Model.UF" Label="UF"
-                               Required="true" Variant="Variant.Outlined" Margin="Margin.Dense">
+                               Required="true" Variant="Variant.Outlined" Margin="Margin.Dense"
+                               Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Map">
                         <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
                         @foreach (var uf in UFs)
                         {
@@ -60,50 +65,76 @@
         </MudPaper>
 
         <!-- Localização -->
-        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
-            <MudText Typo="Typo.subtitle1" Style="font-weight:600;display:block;margin-bottom:16px;">
-                Localização
-            </MudText>
-            <MudGrid>
+        <MudPaper Elevation="1" Class="pa-5 mb-4" Style="border-radius:8px;">
+            <div class="section-header mb-1">
+                <MudIcon Icon="@Icons.Material.Filled.LocationOn" />
+                <span>Localização</span>
+            </div>
+            <span class="section-sub">Município, bacia hidrográfica e sub-bacia da estrutura</span>
+            <MudGrid Spacing="3">
                 <MudItem xs="12" md="4">
                     <MudTextField @bind-Value="Model.Municipio" Label="Município"
-                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.LocationCity" />
                 </MudItem>
                 <MudItem xs="12" md="4">
                     <MudTextField @bind-Value="Model.BaciaHidrografica" Label="Bacia Hidrográfica"
-                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Water" />
                 </MudItem>
                 <MudItem xs="12" md="4">
                     <MudTextField @bind-Value="Model.SubBacia" Label="Sub-bacia"
-                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Waves" />
                 </MudItem>
             </MudGrid>
         </MudPaper>
 
         <!-- Diques -->
-        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
-            <MudText Typo="Typo.subtitle1" Style="font-weight:600;display:block;margin-bottom:16px;">
-                Quantidade de Diques Internos
+        <MudPaper Elevation="1" Class="pa-5 mb-4" Style="border-radius:8px;">
+            <div class="section-header mb-1">
+                <MudIcon Icon="@Icons.Material.Filled.Layers" />
+                <span>Diques Internos</span>
                 <MudTooltip Text="Caso não tenha nenhum dique interno, informe 0">
-                    <MudIcon Icon="@Icons.Material.Outlined.HelpOutline" Size="Size.Small"
-                             Style="vertical-align:middle;color:#636366;margin-left:4px;" />
+                    <MudIcon Icon="@Icons.Material.Outlined.HelpOutline"
+                             Style="font-size:16px !important;color:#A0A0A5;cursor:help;" />
                 </MudTooltip>
-            </MudText>
-            <MudGrid>
+            </div>
+            <span class="section-sub">Quantidade de diques internos da estrutura</span>
+            <MudGrid Spacing="3">
                 <MudItem xs="12" md="3">
                     <MudNumericField @bind-Value="Model.QuantidadeDiques" Label="Quantidade"
                                      Required="true" Min="0"
-                                     Variant="Variant.Outlined" Margin="Margin.Dense" />
+                                     Variant="Variant.Outlined" Margin="Margin.Dense"
+                                     Adornment="Adornment.End" AdornmentText="un." />
+                </MudItem>
+                <MudItem xs="12" md="9" Class="d-flex align-center">
+                    @if (Model.QuantidadeDiques == 0)
+                    {
+                        <MudAlert Severity="Severity.Info" Dense="true" Class="w-100" Style="border-radius:6px;">
+                            Estrutura sem diques internos cadastrados.
+                        </MudAlert>
+                    }
+                    else
+                    {
+                        <MudAlert Severity="Severity.Success" Dense="true" Class="w-100" Style="border-radius:6px;">
+                            @Model.QuantidadeDiques dique(s) interno(s) a serem detalhados.
+                        </MudAlert>
+                    }
                 </MudItem>
             </MudGrid>
         </MudPaper>
 
         <!-- Ações -->
         <div class="d-flex justify-end gap-2 mt-2">
-            <MudButton Variant="Variant.Outlined" @onclick="Cancelar">Cancelar</MudButton>
+            <MudButton Variant="Variant.Text" @onclick="Cancelar"
+                       StartIcon="@Icons.Material.Filled.ArrowBack">
+                Cancelar
+            </MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Primary"
                        StartIcon="@Icons.Material.Filled.Save"
-                       @onclick="Salvar" Disabled="@Salvando">
+                       @onclick="Salvar" Disabled="@Salvando"
+                       Style="min-width:120px;">
                 @(Salvando ? "Salvando…" : "Salvar")
             </MudButton>
         </div>

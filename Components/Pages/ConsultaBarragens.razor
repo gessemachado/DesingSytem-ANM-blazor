@@ -9,52 +9,74 @@
     <MudBreadcrumbs Items="_crumbs" />
 
     <div class="d-flex justify-space-between align-center mt-2 mb-4">
-        <MudText Typo="Typo.h5">Minhas Barragens</MudText>
+        <div>
+            <MudText Typo="Typo.h5" Style="font-weight:700;">Minhas Barragens</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;">Gerencie e acompanhe todas as estruturas cadastradas</MudText>
+        </div>
         <MudButton Variant="Variant.Filled" Color="Color.Primary"
                    StartIcon="@Icons.Material.Filled.Add"
-                   Href="/barragem/nova">
+                   Href="/barragem/nova" Size="Size.Medium">
             Nova barragem
         </MudButton>
     </div>
 
     <!-- KPI cards -->
     <div class="kpi-row">
-        <div class="kpi-card">
-            <MudIcon Icon="@Icons.Material.Filled.Water" Color="Color.Primary" Style="font-size:32px;" />
+        <div class="kpi-card kpi-card--blue">
+            <MudAvatar Color="Color.Primary" Variant="Variant.Filled" Style="width:48px;height:48px;">
+                <MudIcon Icon="@Icons.Material.Filled.Water" />
+            </MudAvatar>
             <div>
-                <MudText Typo="Typo.h4" Color="Color.Primary">@Barragens.Count</MudText>
-                <MudText Typo="Typo.caption" Style="color:#636366;">Total de Barragens</MudText>
+                <MudText Typo="Typo.h4" Style="font-weight:700;color:#1351B4;line-height:1;">@Barragens.Count</MudText>
+                <MudText Typo="Typo.body2" Style="color:#636366;font-size:13px;">Total de Barragens</MudText>
             </div>
         </div>
-        <div class="kpi-card">
-            <MudIcon Icon="@Icons.Material.Filled.HourglassEmpty" Style="font-size:32px;color:#D97706;" />
+        <div class="kpi-card kpi-card--orange">
+            <MudAvatar Style="width:48px;height:48px;background:#FEF3C7;">
+                <MudIcon Icon="@Icons.Material.Filled.HourglassEmpty" Style="color:#D97706;" />
+            </MudAvatar>
             <div>
-                <MudText Typo="Typo.h4" Style="color:#D97706;">@Barragens.Count(b => b.Status == "andamento")</MudText>
-                <MudText Typo="Typo.caption" Style="color:#636366;">Em Andamento</MudText>
+                <MudText Typo="Typo.h4" Style="font-weight:700;color:#D97706;line-height:1;">@Barragens.Count(b => b.Status == "andamento")</MudText>
+                <MudText Typo="Typo.body2" Style="color:#636366;font-size:13px;">Em Andamento</MudText>
             </div>
         </div>
-        <div class="kpi-card">
-            <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Style="font-size:32px;color:#DC2626;" />
+        <div class="kpi-card kpi-card--red">
+            <MudAvatar Style="width:48px;height:48px;background:#FEE2E2;">
+                <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Style="color:#DC2626;" />
+            </MudAvatar>
             <div>
-                <MudText Typo="Typo.h4" Style="color:#DC2626;">@Barragens.Count(b => b.Status == "pendente")</MudText>
-                <MudText Typo="Typo.caption" Style="color:#636366;">Pendentes</MudText>
+                <MudText Typo="Typo.h4" Style="font-weight:700;color:#DC2626;line-height:1;">@Barragens.Count(b => b.Status == "pendente")</MudText>
+                <MudText Typo="Typo.body2" Style="color:#636366;font-size:13px;">Pendentes</MudText>
+            </div>
+        </div>
+        <div class="kpi-card kpi-card--green">
+            <MudAvatar Style="width:48px;height:48px;background:#DCFCE7;">
+                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Style="color:#16A34A;" />
+            </MudAvatar>
+            <div>
+                <MudText Typo="Typo.h4" Style="font-weight:700;color:#16A34A;line-height:1;">@Barragens.Count(b => b.Status == "concluido")</MudText>
+                <MudText Typo="Typo.body2" Style="color:#636366;font-size:13px;">Concluídos</MudText>
             </div>
         </div>
     </div>
 
     <!-- Filtros -->
-    <MudPaper Elevation="1" Class="pa-4 mb-2" Style="border-radius:8px;">
-        <MudText Typo="Typo.subtitle2" Class="mb-3" Style="font-weight:600;color:#636366;">Filtros</MudText>
-        <MudGrid>
+    <MudPaper Elevation="1" Class="pa-4 mb-3" Style="border-radius:8px;">
+        <MudGrid Spacing="2">
             <MudItem xs="12" md="5">
                 <MudTextField T="string" @bind-Value="FiltroTexto"
-                              Label="Busca" Placeholder="Nome da barragem ou empresa…"
+                              Label="Busca rápida"
+                              Placeholder="Nome da barragem ou empresa…"
                               Variant="Variant.Outlined" Margin="Margin.Dense"
-                              Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Clearable="true" />
             </MudItem>
             <MudItem xs="6" md="3">
                 <MudSelect T="string" @bind-Value="FiltroStatus" Label="Status"
-                           Variant="Variant.Outlined" Margin="Margin.Dense">
+                           Variant="Variant.Outlined" Margin="Margin.Dense"
+                           AdornmentIcon="@Icons.Material.Filled.FilterList"
+                           Adornment="Adornment.Start">
                     <MudSelectItem T="string" Value="@("")">Todos</MudSelectItem>
                     <MudSelectItem T="string" Value="@("andamento")">Em andamento</MudSelectItem>
                     <MudSelectItem T="string" Value="@("concluido")">Concluído</MudSelectItem>
@@ -70,39 +92,85 @@
                     <MudSelectItem T="string" Value="@("baixo")">Baixo</MudSelectItem>
                 </MudSelect>
             </MudItem>
-            <MudItem xs="12" md="2" Class="d-flex align-end gap-2">
+            <MudItem xs="12" md="2" Class="d-flex gap-2">
                 <MudButton Variant="Variant.Filled" Color="Color.Primary"
                            StartIcon="@Icons.Material.Filled.Search" FullWidth="true">
                     Filtrar
                 </MudButton>
-                <MudIconButton Icon="@Icons.Material.Filled.ClearAll" Variant="Variant.Outlined"
-                               @onclick="LimparFiltros" />
+                <MudTooltip Text="Limpar filtros">
+                    <MudIconButton Icon="@Icons.Material.Filled.ClearAll"
+                                   Variant="Variant.Outlined"
+                                   @onclick="LimparFiltros" />
+                </MudTooltip>
             </MudItem>
         </MudGrid>
     </MudPaper>
 
     <!-- Tabela -->
     <MudTable T="BarragemItem" Items="@BarragensFiltradas" Hover="true"
-              RowsPerPage="@ItensPorPagina" Elevation="1" Style="border-radius:8px;overflow:hidden;">
+              RowsPerPage="@ItensPorPagina" Elevation="1"
+              Style="border-radius:8px;overflow:hidden;"
+              SortLabel="Ordenar por">
         <ToolBarContent>
-            <MudText Typo="Typo.subtitle2">@BarragensFiltradas.Count() resultado(s)</MudText>
+            <MudText Typo="Typo.subtitle2" Style="font-weight:600;">
+                @BarragensFiltradas.Count() barragem(ns) encontrada(s)
+            </MudText>
+            <MudSpacer />
+            <MudTooltip Text="Exportar lista">
+                <MudIconButton Icon="@Icons.Material.Filled.FileDownload" Variant="Variant.Text" Size="Size.Small" />
+            </MudTooltip>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh>Nº Cadastro</MudTh>
-            <MudTh>Nome da Barragem</MudTh>
-            <MudTh>Empresa</MudTh>
+            <MudTh Style="width:56px;"></MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<BarragemItem, object>(x => x.Id)">
+                    Nº Cadastro
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<BarragemItem, object>(x => x.Nome)">
+                    Nome da Barragem
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<BarragemItem, object>(x => x.Empresa)">
+                    Empresa
+                </MudTableSortLabel>
+            </MudTh>
             <MudTh>UF</MudTh>
-            <MudTh>Risco</MudTh>
-            <MudTh>Status</MudTh>
-            <MudTh></MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<BarragemItem, object>(x => x.Risco)">
+                    Risco
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<BarragemItem, object>(x => x.Status)">
+                    Status
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh Style="width:48px;"></MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Nº Cadastro">
-                <MudLink Href="@($"/barragem/{context.Id}/dados-iniciais")">#@context.Id</MudLink>
+            <MudTd>
+                <MudAvatar Size="Size.Small" Style="@($"background:{AvatarColor(context.Empresa)};color:#fff;font-size:13px;font-weight:700;")">
+                    @context.Empresa[0]
+                </MudAvatar>
             </MudTd>
-            <MudTd DataLabel="Nome">@context.Nome</MudTd>
-            <MudTd DataLabel="Empresa">@context.Empresa</MudTd>
-            <MudTd DataLabel="UF">@context.UF</MudTd>
+            <MudTd DataLabel="Nº Cadastro">
+                <MudLink Href="@($"/barragem/{context.Id}/dados-iniciais")"
+                         Style="font-weight:600;color:#1351B4;">#@context.Id</MudLink>
+            </MudTd>
+            <MudTd DataLabel="Nome">
+                <MudText Style="font-weight:500;">@context.Nome</MudText>
+            </MudTd>
+            <MudTd DataLabel="Empresa">
+                <MudText Typo="Typo.body2" Style="color:#636366;">@context.Empresa</MudText>
+            </MudTd>
+            <MudTd DataLabel="UF">
+                <MudChip T="string" Size="Size.Small" Style="background:#F0F0F5;color:#1B1B1B;font-weight:600;">
+                    @context.UF
+                </MudChip>
+            </MudTd>
             <MudTd DataLabel="Risco">
                 <MudChip T="string" Size="Size.Small" Class="@($"chip-{context.Risco}")">
                     @context.RiscoLabel
@@ -114,11 +182,29 @@
                 </MudChip>
             </MudTd>
             <MudTd>
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small"
-                               @onclick="() => IrParaBarragem(context.Id)" />
-                <MudIconButton Icon="@Icons.Material.Filled.Visibility" Size="Size.Small" />
+                <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small"
+                         Dense="true" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+                    <MudMenuItem Icon="@Icons.Material.Filled.Edit"
+                                 OnClick="@(() => IrParaBarragem(context.Id))">
+                        Editar
+                    </MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.Visibility">
+                        Visualizar
+                    </MudMenuItem>
+                    <MudDivider />
+                    <MudMenuItem Icon="@Icons.Material.Filled.Archive" IconColor="Color.Default">
+                        Arquivar
+                    </MudMenuItem>
+                </MudMenu>
             </MudTd>
         </RowTemplate>
+        <NoRecordsContent>
+            <div class="empty-state">
+                <MudIcon Icon="@Icons.Material.Filled.SearchOff" />
+                <MudText Typo="Typo.subtitle2">Nenhuma barragem encontrada</MudText>
+                <MudText Typo="Typo.caption">Tente ajustar os filtros de busca</MudText>
+            </div>
+        </NoRecordsContent>
         <PagerContent>
             <MudTablePager PageSizeOptions="new int[]{10,25,50}" />
         </PagerContent>
@@ -156,12 +242,19 @@
             (string.IsNullOrEmpty(FiltroRisco)  || b.Risco  == FiltroRisco));
 
     private void LimparFiltros() { FiltroTexto = ""; FiltroStatus = ""; FiltroRisco = ""; }
-
     private void IrParaBarragem(int id) => Nav.NavigateTo($"/barragem/{id}/dados-iniciais");
+
+    private static string AvatarColor(string empresa) => empresa switch
+    {
+        "Empresa A" => "#1351B4",
+        "Empresa B" => "#168821",
+        "Empresa C" => "#9333EA",
+        _ => "#636366"
+    };
 
     private record BarragemItem(int Id, string Nome, string Empresa, string UF, string Risco, string Status)
     {
-        public string RiscoLabel => Risco switch { "alto" => "Alto", "medio" => "Médio", "baixo" => "Baixo", _ => Risco };
+        public string RiscoLabel  => Risco  switch { "alto"  => "Alto",        "medio"  => "Médio",      "baixo"     => "Baixo",     _ => Risco };
         public string StatusLabel => Status switch { "andamento" => "Em andamento", "concluido" => "Concluído", "pendente" => "Pendente", _ => Status };
     }
 }
