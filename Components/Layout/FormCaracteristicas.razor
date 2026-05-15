@@ -1,0 +1,330 @@
+@using SIGBM.Models
+
+<div style="display:flex;flex-direction:column;gap:24px;">
+
+    <!-- Tipo de Barragem -->
+    <div>
+        <div class="ct-label">Tipo de Barragem de Mineração</div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.TipoBarragem" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("alteamento")">Barragem de alteamento</MudRadio>
+            <MudRadio T="string" Value="@("contencao")">Barragem de contenção</MudRadio>
+            <MudRadio T="string" Value="@("disposicao")">Barragem de disposição direta</MudRadio>
+            <MudRadio T="string" Value="@("dique")">Dique</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Fase de vida -->
+    <div>
+        <div class="ct-label">Fase de vida da barragem</div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.FaseVida" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("construcao")">Em construção</MudRadio>
+            <MudRadio T="string" Value="@("operacao")">Em operação</MudRadio>
+            <MudRadio T="string" Value="@("desativada")">Desativada</MudRadio>
+            <MudRadio T="string" Value="@("descaracterizacao")">Em descaracterização</MudRadio>
+            <MudRadio T="string" Value="@("descaracterizada")">Descaracterizada</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Datas -->
+    <div>
+        <div class="section-header mb-3">
+            <MudIcon Icon="@Icons.Material.Outlined.CalendarMonth" />
+            <span>Datas</span>
+        </div>
+        <MudGrid Spacing="3">
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="Modelo.DataInicioConstrucao"
+                              Label="Data de início da construção"
+                              Placeholder="dd/mm/aaaa"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@Icons.Material.Outlined.CalendarToday" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
+                    <MudText Typo="Typo.caption" Style="color:#636366;">Data de início da operação</MudText>
+                    <span class="field-tag field-tag--cri">CRI-CT5</span>
+                </div>
+                <MudTextField @bind-Value="Modelo.DataInicioOperacao"
+                              Placeholder="dd/mm/aaaa"
+                              Variant="Variant.Outlined" Margin="Margin.None"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@Icons.Material.Outlined.CalendarToday" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="Modelo.DataDesativacao"
+                              Label="Data de desativação"
+                              Placeholder="dd/mm/aaaa"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@Icons.Material.Outlined.CalendarToday" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="Modelo.DataInicioDescaracterizacao"
+                              Label="Data de início da descaracterização"
+                              Placeholder="dd/mm/aaaa"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@Icons.Material.Outlined.CalendarToday" />
+            </MudItem>
+        </MudGrid>
+    </div>
+
+    <MudDivider />
+
+    <!-- Uso principal -->
+    <div>
+        <div class="ct-label">Uso principal</div>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:8px;">
+            <MudCheckBox @bind-Value="Modelo.UsoPrincipalRejeitos" Label="Rejeitos" Color="Color.Primary" />
+            <MudCheckBox @bind-Value="Modelo.UsoPrincipalSedimentos" Label="Sedimentos" Color="Color.Primary" />
+        </div>
+    </div>
+
+    <MudDivider />
+
+    <!-- Constituição do maciço -->
+    <div>
+        <div class="ct-label">Constituição do maciço</div>
+        <div style="display:flex;flex-direction:column;gap:4px;margin-top:8px;">
+            <MudCheckBox @bind-Value="Modelo.MassaConcreto" Label="Concreto" Color="Color.Primary" Dense="true" />
+            <MudCheckBox @bind-Value="Modelo.MassaRejeito" Label="Rejeito" Color="Color.Primary" Dense="true" />
+            <MudCheckBox @bind-Value="Modelo.MassaTerraHomogenea" Label="Terra Homogênea" Color="Color.Primary" Dense="true" />
+            <MudCheckBox @bind-Value="Modelo.MassaEnrocamento" Label="Enrocamento" Color="Color.Primary" Dense="true" />
+            <MudCheckBox @bind-Value="Modelo.MassaTerraEnrocamento" Label="Terra/Enrocamento" Color="Color.Primary" Dense="true" />
+        </div>
+    </div>
+
+    <MudDivider />
+
+    <!-- Dimensões -->
+    <div>
+        <div class="section-header mb-3">
+            <MudIcon Icon="@Icons.Material.Outlined.Straighten" />
+            <span>Dimensões</span>
+        </div>
+        <MudGrid Spacing="3">
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="Modelo.AlturaMaximaProjeto"
+                              Label="Altura máxima do projeto licenciado (m)"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Placeholder="Ex: 50,00"
+                              Adornment="Adornment.End" AdornmentText="m" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
+                    <MudText Typo="Typo.caption" Style="color:#636366;">Altura máxima atual (m)</MudText>
+                    <span class="field-tag field-tag--cri">CRI-CT1</span>
+                    <span class="field-tag field-tag--pnsb">PNSB</span>
+                    <MudTooltip Text="Altura máxima desde o ponto mais baixo da fundação até a crista">
+                        <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;" />
+                    </MudTooltip>
+                </div>
+                <MudTextField @bind-Value="Modelo.AlturaMaximaAtual" Placeholder="Ex: 45,00"
+                              Variant="Variant.Outlined" Margin="Margin.None"
+                              Adornment="Adornment.End" AdornmentText="m" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="Modelo.ComprimentoCristaProjeto"
+                              Label="Comprimento da crista do projeto (m)"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Placeholder="Ex: 400,00"
+                              Adornment="Adornment.End" AdornmentText="m" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
+                    <MudText Typo="Typo.caption" Style="color:#636366;">Comprimento atual da crista (m)</MudText>
+                    <span class="field-tag field-tag--cri">CRI-CT2</span>
+                    <MudTooltip Text="Comprimento total da crista da barragem na situação atual">
+                        <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;" />
+                    </MudTooltip>
+                </div>
+                <MudTextField @bind-Value="Modelo.ComprimentoCristaAtual" Placeholder="Ex: 320,00"
+                              Variant="Variant.Outlined" Margin="Margin.None"
+                              Adornment="Adornment.End" AdornmentText="m" />
+            </MudItem>
+        </MudGrid>
+    </div>
+
+    <MudDivider />
+
+    <!-- Material de construção -->
+    <div>
+        <div class="ct-label">
+            Material de construção
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT3</span>
+            <MudTooltip Text="Material predominante utilizado na construção do barramento">
+                <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;margin-left:4px;" />
+            </MudTooltip>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.MaterialConstrucao" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("terra_homogenea")">Terra homogênea</MudRadio>
+            <MudRadio T="string" Value="@("enrocamento")">Enrocamento com núcleo argiloso</MudRadio>
+            <MudRadio T="string" Value="@("terra_enrocamento")">Terra/enrocamento</MudRadio>
+            <MudRadio T="string" Value="@("concreto_convencional")">Concreto convencional (CCG/CCR)</MudRadio>
+            <MudRadio T="string" Value="@("rejeito")">Rejeito</MudRadio>
+            <MudRadio T="string" Value="@("outros")">Outros</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Tipo de fundação -->
+    <div>
+        <div class="ct-label">
+            Tipo de fundação
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT4</span>
+            <MudTooltip Text="Tipo de fundação da estrutura">
+                <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;margin-left:4px;" />
+            </MudTooltip>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.TipoFundacao" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("rocha_competente")">Rocha competente (resistência moderada ou alta)</MudRadio>
+            <MudRadio T="string" Value="@("rocha_fraturada")">Rocha fraturada/intemperizada</MudRadio>
+            <MudRadio T="string" Value="@("solo_areia")">Solo (areia ou pedregulho)</MudRadio>
+            <MudRadio T="string" Value="@("solo_argila")">Solo (argila ou silte)</MudRadio>
+            <MudRadio T="string" Value="@("nao_conhecido")">Não conhecido</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Método construtivo -->
+    <div>
+        <div class="ct-label">
+            Método construtivo
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT8</span>
+            <MudTooltip Text="Método utilizado para alteamento da barragem">
+                <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;margin-left:4px;" />
+            </MudTooltip>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.MetodoConstrutivo" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("montante")">Montante</MudRadio>
+            <MudRadio T="string" Value="@("jusante")">Jusante</MudRadio>
+            <MudRadio T="string" Value="@("linha_centro")">Linha de centro</MudRadio>
+            <MudRadio T="string" Value="@("nao_se_aplica")">Não se aplica</MudRadio>
+            <MudRadio T="string" Value="@("nao_identificado")">Não identificado</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Drenagem interna -->
+    <div>
+        <div class="ct-label">
+            Existência de drenagem interna
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT7</span>
+            <MudTooltip Text="Sistema de drenagem interno ao maciço da barragem">
+                <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;margin-left:4px;" />
+            </MudTooltip>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.DrenagemInterna" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("adequada")">Sim, e é adequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("inadequada")">Sim, mas é inadequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("nao")">Não há drenagem interna</MudRadio>
+            <MudRadio T="string" Value="@("nao_identificado")">Não identificada</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Drenagem superficial -->
+    <div>
+        <div class="ct-label">
+            Existência de drenagem superficial
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT11</span>
+            <MudTooltip Text="Sistema de drenagem superficial do talude">
+                <MudIcon Icon="@Icons.Material.Outlined.Help" Style="font-size:14px !important;color:#A0A0A5;margin-left:4px;" />
+            </MudTooltip>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.DrenagemSuperficial" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("adequada")">Sim, e é adequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("inadequada")">Sim, mas é inadequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("nao")">Não há drenagem superficial</MudRadio>
+            <MudRadio T="string" Value="@("nao_identificado")">Não identificada</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Inclinação do talude -->
+    <div>
+        <div class="ct-label">
+            Inclinação média do talude na seção principal
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT10</span>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.InclinacaoTalude" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("3:1_menor")">Menor que 3H:1V</MudRadio>
+            <MudRadio T="string" Value="@("3:1_igual")">Igual a 3H:1V</MudRadio>
+            <MudRadio T="string" Value="@("3:1_maior")">Maior que 3H:1V</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Instrumentação -->
+    <div>
+        <div class="ct-label">
+            Instrumentação
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT9</span>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.Instrumentacao" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("adequada")">Sim, e é adequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("inadequada")">Sim, mas é inadequada ao porte da barragem</MudRadio>
+            <MudRadio T="string" Value="@("nao")">Não possui instrumentação</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Vazão de projeto -->
+    <div>
+        <div class="ct-label">
+            Vazão de projeto
+            <span class="field-tag field-tag--cri" style="margin-left:8px;">CRI-CT6</span>
+        </div>
+        <MudRadioGroup T="string" @bind-Value="Modelo.VazaoProjeto" Class="ct-radio-group">
+            <MudRadio T="string" Value="@("tr10000")">TR ≥ 10.000 anos ou CMP</MudRadio>
+            <MudRadio T="string" Value="@("tr1000")">1.000 anos ≤ TR &lt; 10.000 anos</MudRadio>
+            <MudRadio T="string" Value="@("tr500")">500 anos ≤ TR &lt; 1.000 anos</MudRadio>
+            <MudRadio T="string" Value="@("tr100")">100 anos ≤ TR &lt; 500 anos</MudRadio>
+            <MudRadio T="string" Value="@("tr_menor100")">TR &lt; 100 anos ou sem vertedouro</MudRadio>
+        </MudRadioGroup>
+    </div>
+
+    <MudDivider />
+
+    <!-- Minério e área do reservatório -->
+    <div>
+        <div class="section-header mb-3">
+            <MudIcon Icon="@Icons.Material.Outlined.Inventory2" />
+            <span>Reservatório</span>
+        </div>
+        <MudGrid Spacing="3">
+            <MudItem xs="12" md="8">
+                <MudTextField @bind-Value="Modelo.MinerioReservatorio"
+                              Label="Minério principal presente no reservatório"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Placeholder="Ex: Minério de Ferro"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Outlined.Diamond" />
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudTextField @bind-Value="Modelo.AreaReservatorio"
+                              Label="Área do reservatório"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Placeholder="Ex: 100.000,00"
+                              Adornment="Adornment.End" AdornmentText="m²" />
+            </MudItem>
+        </MudGrid>
+    </div>
+
+</div>
+
+@code {
+    [Parameter] public CaractModel Modelo { get; set; } = new();
+}

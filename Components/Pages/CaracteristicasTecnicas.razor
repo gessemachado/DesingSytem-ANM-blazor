@@ -1,5 +1,6 @@
 @page "/barragem/{Id:int}/caracteristicas-tecnicas"
 @rendermode InteractiveServer
+@using SIGBM.Models
 @inject NavigationManager Nav
 @inject ISnackbar Snackbar
 
@@ -17,183 +18,23 @@
     <main class="page-main">
 
         <MudPaper Elevation="1" Style="border-radius:8px;overflow:hidden;" Class="mb-4">
-            <MudTabs Elevation="0" Rounded="false" ApplyEffectsToContainer="true" Color="Color.Primary">
+            <MudTabs Elevation="0" Rounded="false" ApplyEffectsToContainer="true">
 
-                <!-- Tab 1: Dimensões -->
-                <MudTabPanel Text="Dimensões" Icon="@Icons.Material.Outlined.Straighten">
+                <MudTabPanel Text="Barramento Principal">
                     <div class="pa-5">
-                        <div class="section-header mb-1">
-                            <MudIcon Icon="@Icons.Material.Filled.Straighten" />
-                            <span>Dimensões Principais</span>
-                        </div>
-                        <span class="section-sub">Características geométricas da estrutura principal</span>
-                        <MudGrid Spacing="3">
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Altura máxima atual</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT1</span>
-                                    <span class="field-tag field-tag--pnsb">PNSB</span>
-                                </div>
-                                <MudTextField @bind-Value="Model.AlturaMaxima" Placeholder="Ex: 45,00"
-                                              Variant="Variant.Outlined" Margin="Margin.None"
-                                              Adornment="Adornment.End" AdornmentText="m" />
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Comprimento da crista</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT2</span>
-                                </div>
-                                <MudTextField @bind-Value="Model.ComprimentoCrista" Placeholder="Ex: 320,00"
-                                              Variant="Variant.Outlined" Margin="Margin.None"
-                                              Adornment="Adornment.End" AdornmentText="m" />
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <MudTextField @bind-Value="Model.LarguraCrista" Label="Largura da crista"
-                                              Placeholder="Ex: 8,00" Variant="Variant.Outlined" Margin="Margin.Dense"
-                                              Adornment="Adornment.End" AdornmentText="m" />
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <MudTextField @bind-Value="Model.AreaBacia" Label="Área da bacia hidráulica"
-                                              Placeholder="Ex: 12,50" Variant="Variant.Outlined" Margin="Margin.Dense"
-                                              Adornment="Adornment.End" AdornmentText="ha" />
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <MudTextField @bind-Value="Model.VolumeTotal" Label="Volume total do reservatório"
-                                              Placeholder="Ex: 1.500.000" Variant="Variant.Outlined" Margin="Margin.Dense"
-                                              Adornment="Adornment.End" AdornmentText="m³" />
-                            </MudItem>
-                        </MudGrid>
+                        <FormCaracteristicas Modelo="@BarramentoPrincipal" />
                     </div>
                 </MudTabPanel>
 
-                <!-- Tab 2: Construção -->
-                <MudTabPanel Text="Construção" Icon="@Icons.Material.Outlined.Construction">
+                <MudTabPanel Text="Dique 01">
                     <div class="pa-5">
-                        <div class="section-header mb-1">
-                            <MudIcon Icon="@Icons.Material.Filled.Construction" />
-                            <span>Materiais e Método Construtivo</span>
-                        </div>
-                        <span class="section-sub">Dados sobre materiais empregados e processo de construção</span>
-                        <MudGrid Spacing="3">
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Material de construção</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT3</span>
-                                </div>
-                                <MudSelect T="string" @bind-Value="Model.MaterialConstrucao"
-                                           Variant="Variant.Outlined" Margin="Margin.None">
-                                    <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("terra")">Terra</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("enrocamento")">Enrocamento</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("concreto")">Concreto</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("misto")">Misto</MudSelectItem>
-                                </MudSelect>
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Tipo de fundação</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT4</span>
-                                </div>
-                                <MudSelect T="string" @bind-Value="Model.TipoFundacao"
-                                           Variant="Variant.Outlined" Margin="Margin.None">
-                                    <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("rocha")">Rocha</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("solo")">Solo</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("misto")">Misto</MudSelectItem>
-                                </MudSelect>
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Método construtivo</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT5</span>
-                                </div>
-                                <MudSelect T="string" @bind-Value="Model.MetodoConstrutivo"
-                                           Variant="Variant.Outlined" Margin="Margin.None">
-                                    <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("montante")">Montante</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("jusante")">Jusante</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("linha_centro")">Linha de centro</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("nao_se_aplica")">Não se aplica</MudSelectItem>
-                                </MudSelect>
-                            </MudItem>
-                        </MudGrid>
-                    </div>
-                </MudTabPanel>
-
-                <!-- Tab 3: Drenagem & Instrumentação -->
-                <MudTabPanel Text="Drenagem & Instrumentação" Icon="@Icons.Material.Outlined.Sensors">
-                    <div class="pa-5">
-                        <div class="section-header mb-1">
-                            <MudIcon Icon="@Icons.Material.Filled.Sensors" />
-                            <span>Drenagem e Instrumentação</span>
-                        </div>
-                        <span class="section-sub">Sistemas de controle, monitoramento e segurança</span>
-                        <MudGrid Spacing="3">
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Drenagem interna</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT6</span>
-                                </div>
-                                <MudSelect T="string" @bind-Value="Model.DrenagemInterna"
-                                           Variant="Variant.Outlined" Margin="Margin.None">
-                                    <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("sim")">Sim</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("nao")">Não</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("nao_informado")">Não informado</MudSelectItem>
-                                </MudSelect>
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Drenagem superficial</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT7</span>
-                                </div>
-                                <MudSelect T="string" @bind-Value="Model.DrenagemSuperficial"
-                                           Variant="Variant.Outlined" Margin="Margin.None">
-                                    <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("sim")">Sim</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("nao")">Não</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("nao_informado")">Não informado</MudSelectItem>
-                                </MudSelect>
-                            </MudItem>
-                            <MudItem xs="12" md="4">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Instrumentação</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT9</span>
-                                </div>
-                                <MudSelect T="string" @bind-Value="Model.Instrumentacao"
-                                           Variant="Variant.Outlined" Margin="Margin.None">
-                                    <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("sim")">Sim</MudSelectItem>
-                                    <MudSelectItem T="string" Value="@("nao")">Não</MudSelectItem>
-                                </MudSelect>
-                            </MudItem>
-                            <MudItem xs="12" md="6">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Inclinação média do talude (H:V)</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT8</span>
-                                </div>
-                                <MudTextField @bind-Value="Model.InclinacaoTalude" Placeholder="Ex: 3:1"
-                                              Variant="Variant.Outlined" Margin="Margin.None"
-                                              Adornment="Adornment.Start"
-                                              AdornmentIcon="@Icons.Material.Outlined.ShowChart" />
-                            </MudItem>
-                            <MudItem xs="12" md="6">
-                                <div class="mb-1" style="display:flex;align-items:center;gap:4px;">
-                                    <MudText Typo="Typo.caption" Style="color:#636366;">Vazão de projeto</MudText>
-                                    <span class="field-tag field-tag--cri">CRI-CT10</span>
-                                </div>
-                                <MudTextField @bind-Value="Model.VazaoProjeto" Placeholder="Ex: 125,00"
-                                              Variant="Variant.Outlined" Margin="Margin.None"
-                                              Adornment="Adornment.End" AdornmentText="m³/s" />
-                            </MudItem>
-                        </MudGrid>
+                        <FormCaracteristicas Modelo="@Dique01" />
                     </div>
                 </MudTabPanel>
 
             </MudTabs>
         </MudPaper>
 
-        <!-- Ações -->
         <div class="d-flex justify-end gap-2">
             <MudButton Variant="Variant.Text" StartIcon="@Icons.Material.Filled.ArrowBack"
                        @onclick='() => Nav.NavigateTo($"/barragem/{Id}/dados-iniciais")'>
@@ -219,24 +60,29 @@
         new("Características Técnicas", href: null, disabled: true),
     ];
 
-    private CaractModel Model = new();
+    private CaractModel BarramentoPrincipal = new()
+    {
+        AlturaMaximaProjeto      = "50,00",
+        AlturaMaximaAtual        = "45,00",
+        ComprimentoCristaProjeto = "400,00",
+        ComprimentoCristaAtual   = "320,00",
+        TipoBarragem             = "alteamento",
+        FaseVida                 = "operacao",
+        MaterialConstrucao       = "terra_homogenea",
+        TipoFundacao             = "rocha_competente",
+        MetodoConstrutivo        = "jusante",
+        DrenagemInterna          = "adequada",
+        DrenagemSuperficial      = "adequada",
+        InclinacaoTalude         = "3:1_menor",
+        Instrumentacao           = "adequada",
+        VazaoProjeto             = "tr10000",
+        MinerioReservatorio      = "Minério de Ferro",
+        AreaReservatorio         = "100.000,00",
+        UsoPrincipalRejeitos     = true,
+        MassaRejeito             = true,
+    };
+
+    private CaractModel Dique01 = new();
 
     private void Salvar() => Snackbar.Add("Características técnicas salvas!", Severity.Success);
-
-    private class CaractModel
-    {
-        public string AlturaMaxima { get; set; } = "45,00";
-        public string ComprimentoCrista { get; set; } = "320,00";
-        public string LarguraCrista { get; set; } = "8,00";
-        public string AreaBacia { get; set; } = "12,50";
-        public string VolumeTotal { get; set; } = "1.500.000";
-        public string MaterialConstrucao { get; set; } = "terra";
-        public string TipoFundacao { get; set; } = "rocha";
-        public string MetodoConstrutivo { get; set; } = "jusante";
-        public string DrenagemInterna { get; set; } = "sim";
-        public string DrenagemSuperficial { get; set; } = "sim";
-        public string Instrumentacao { get; set; } = "sim";
-        public string InclinacaoTalude { get; set; } = "3:1";
-        public string VazaoProjeto { get; set; } = "125,00";
-    }
 }
