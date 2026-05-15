@@ -1,0 +1,187 @@
+@page "/barragem/{Id:int}/caracteristicas-tecnicas"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+@inject ISnackbar Snackbar
+
+<PageTitle>Características Técnicas — SIGBM</PageTitle>
+
+<div style="padding:16px 24px 0;">
+    <MudBreadcrumbs Items="_crumbs" />
+    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
+    <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
+</div>
+
+<div class="page-wrap">
+    <SigbmSidebar NumeroCadastro="@Id" />
+
+    <main class="page-main">
+
+        <!-- Dimensões principais -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Dimensões Principais</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
+                Características geométricas da estrutura
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.AlturaMaxima" Label="Altura máxima atual (m)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 45,00"
+                                  AdornmentText="CRI-CT1" Adornment="Adornment.End" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.ComprimentoCrista" Label="Comprimento da crista (m)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 320,00"
+                                  AdornmentText="CRI-CT2" Adornment="Adornment.End" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.LarguraCrista" Label="Largura da crista (m)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 8,00" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.AreaBacia" Label="Área da bacia hidráulica (ha)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 12,50" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.VolumeTotal" Label="Volume total do reservatório (m³)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 1.500.000" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Construção -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Construção</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
+                Materiais e métodos construtivos
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" @bind-Value="Model.MaterialConstrucao" Label="Material de construção"
+                               Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("terra")">Terra</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("enrocamento")">Enrocamento</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("concreto")">Concreto</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("misto")">Misto</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" @bind-Value="Model.TipoFundacao" Label="Tipo de fundação"
+                               Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("rocha")">Rocha</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("solo")">Solo</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("misto")">Misto</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" @bind-Value="Model.MetodoConstrutivo" Label="Método construtivo"
+                               Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("montante")">Montante</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("jusante")">Jusante</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("linha_centro")">Linha de centro</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("nao_se_aplica")">Não se aplica</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Drenagem e instrumentação -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Drenagem e Instrumentação</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
+                Sistemas de controle e monitoramento
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" @bind-Value="Model.DrenagemInterna" Label="Drenagem interna"
+                               Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("sim")">Sim</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("nao")">Não</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("nao_informado")">Não informado</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" @bind-Value="Model.DrenagemSuperficial" Label="Drenagem superficial"
+                               Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("sim")">Sim</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("nao")">Não</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("nao_informado")">Não informado</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" @bind-Value="Model.Instrumentacao" Label="Instrumentação"
+                               Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("sim")">Sim</MudSelectItem>
+                        <MudSelectItem T="string" Value="@("nao")">Não</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.InclinacaoTalude" Label="Inclinação média do talude (H:V)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 3:1" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.VazaoProjeto" Label="Vazão de projeto (m³/s)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense"
+                                  Placeholder="Ex: 125,00" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Ações -->
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Outlined"
+                       @onclick='() => Nav.NavigateTo($"/barragem/{Id}/dados-iniciais")'>
+                Voltar
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Save" @onclick="Salvar">
+                Salvar
+            </MudButton>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; } = 9999;
+
+    private List<BreadcrumbItem> _crumbs =
+    [
+        new("Início", href: "/", icon: Icons.Material.Filled.Home),
+        new("Minhas Barragens", href: "/barragens"),
+        new("Barragem #9999", href: null, disabled: false),
+        new("Características Técnicas", href: null, disabled: true),
+    ];
+
+    private CaractModel Model = new();
+
+    private void Salvar() => Snackbar.Add("Características técnicas salvas!", Severity.Success);
+
+    private class CaractModel
+    {
+        public string AlturaMaxima { get; set; } = "45,00";
+        public string ComprimentoCrista { get; set; } = "320,00";
+        public string LarguraCrista { get; set; } = "8,00";
+        public string AreaBacia { get; set; } = "12,50";
+        public string VolumeTotal { get; set; } = "1.500.000";
+        public string MaterialConstrucao { get; set; } = "terra";
+        public string TipoFundacao { get; set; } = "rocha";
+        public string MetodoConstrutivo { get; set; } = "jusante";
+        public string DrenagemInterna { get; set; } = "sim";
+        public string DrenagemSuperficial { get; set; } = "sim";
+        public string Instrumentacao { get; set; } = "sim";
+        public string InclinacaoTalude { get; set; } = "3:1";
+        public string VazaoProjeto { get; set; } = "125,00";
+    }
+}
