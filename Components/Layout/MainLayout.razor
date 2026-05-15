@@ -8,52 +8,81 @@
 
 <MudLayout>
 
-    <MudAppBar Fixed="true" Class="sigbm-appbar" Elevation="2" Style="background:#fff;height:auto;">
+    <MudAppBar Fixed="true" Class="sigbm-appbar" Elevation="0" Style="background:#fff;height:auto;">
 
         <!-- Linha 1: gov.br (40px) -->
         <div class="govbr-top">
             <span class="govbr-brand">gov<span class="govbr-dot">.</span>br</span>
             <div class="govbr-top-right">
                 <MudLink Href="#" Underline="Underline.None">Acesso à Informação</MudLink>
-                <MudText Style="color:rgba(255,255,255,.3);padding:0 6px;">|</MudText>
+                <span class="govbr-top-sep"></span>
                 <MudLink Href="#" Underline="Underline.None">Participe</MudLink>
-                <MudText Style="color:rgba(255,255,255,.3);padding:0 6px;">|</MudText>
+                <span class="govbr-top-sep"></span>
                 <MudLink Href="#" Underline="Underline.None">Órgãos do Governo</MudLink>
-                <MudIconButton Icon="@Icons.Material.Outlined.Contrast" Size="Size.Small" Style="margin-left:8px;" />
-                <MudButton StartIcon="@Icons.Material.Filled.Person" Size="Size.Small" Variant="Variant.Text">
-                    Usuário Fulano
-                </MudButton>
+                <span class="govbr-top-sep"></span>
+                <MudIconButton Icon="@Icons.Material.Outlined.Contrast" Size="Size.Small" />
             </div>
         </div>
 
-        <!-- Linha 2: identidade + busca (64px) -->
+        <!-- Linha 2: identidade + busca + ações (64px) -->
         <div class="govbr-main">
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Default" />
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Default" Size="Size.Medium" />
             <div class="sigbm-brand-block">
                 <span class="sigbm-brand-title">SIGBM</span>
                 <span class="sigbm-brand-sub">Sistema Integrado de Gestão de Barragens de Mineração</span>
             </div>
             <MudSpacer />
-            <MudTextField T="string" Placeholder="O que você procura?" Variant="Variant.Outlined"
+            <MudTextField T="string" Placeholder="Pesquisar…" Variant="Variant.Outlined"
                           Margin="Margin.Dense" Adornment="Adornment.End"
                           AdornmentIcon="@Icons.Material.Filled.Search"
-                          Style="max-width:320px;background:#fff;" />
+                          Style="max-width:280px;background:#fff;" />
+
+            <!-- Notificações -->
+            <MudBadge Content="3" Color="Color.Error" Overlap="true" Class="notif-badge">
+                <MudIconButton Icon="@Icons.Material.Outlined.NotificationsNone"
+                               Color="Color.Default" Size="Size.Medium"
+                               Style="color:#52525B;" />
+            </MudBadge>
+
+            <!-- Usuário -->
+            <div style="display:flex;align-items:center;gap:10px;margin-left:4px;cursor:pointer;padding:6px 10px;border-radius:10px;transition:background .15s;"
+                 onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='transparent'">
+                <MudAvatar Class="user-avatar" Size="Size.Small" Style="width:34px;height:34px;font-size:13px;font-weight:700;">
+                    UF
+                </MudAvatar>
+                <div style="display:flex;flex-direction:column;line-height:1.2;">
+                    <span style="font-size:13px;font-weight:600;color:#111827;">Usuário Fulano</span>
+                    <span style="font-size:11px;color:#9CA3AF;">Empreendedor</span>
+                </div>
+                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                         Style="font-size:18px;color:#9CA3AF;margin-left:2px;" />
+            </div>
         </div>
 
         <!-- Linha 3: menu (48px) -->
         <div class="govbr-nav">
             <MudButton Href="/barragens" Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Outlined.GridView"
                        Class="@(Nav.Uri.Contains("/barragem") ? "govbr-nav-active" : "")">
                 Gerenciar
             </MudButton>
-            <MudButton Href="#" Variant="Variant.Text">Painéis</MudButton>
-            <MudButton Href="#" Variant="Variant.Text">Manuais</MudButton>
-            <MudButton Href="#" Variant="Variant.Text">Configuração</MudButton>
+            <MudButton Href="#" Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Outlined.BarChart">
+                Painéis
+            </MudButton>
+            <MudButton Href="#" Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Outlined.MenuBook">
+                Manuais
+            </MudButton>
+            <MudButton Href="#" Variant="Variant.Text"
+                       StartIcon="@Icons.Material.Outlined.Settings">
+                Configuração
+            </MudButton>
         </div>
 
     </MudAppBar>
 
-    <MudMainContent Style="background:#F0F0F5;min-height:100vh;">
+    <MudMainContent Style="background:#F4F6FA;min-height:100vh;">
 
         @Body
 
@@ -61,13 +90,13 @@
         <div class="govbr-footer">
             <div style="max-width:1280px;margin:0 auto;">
                 <div class="govbr-footer-brand">gov<span class="govbr-dot">.</span>br</div>
-                <div>
+                <div style="margin-bottom:8px;">
                     <MudLink Href="#" Underline="Underline.None">Acessibilidade</MudLink>
                     <MudLink Href="#" Underline="Underline.None">Mapa do site</MudLink>
                     <MudLink Href="#" Underline="Underline.None">Termos de uso</MudLink>
                     <MudLink Href="#" Underline="Underline.None">Ouvidoria</MudLink>
                 </div>
-                <MudText Typo="Typo.caption" Style="color:rgba(255,255,255,.5);margin-top:12px;display:block;">
+                <MudText Typo="Typo.caption" Style="color:rgba(255,255,255,.45);display:block;">
                     Ministério de Minas e Energia · Agência Nacional de Mineração — ANM<br />
                     © @DateTime.Now.Year ANM — Todos os direitos reservados
                 </MudText>
@@ -88,23 +117,23 @@
     {
         PaletteLight = new PaletteLight
         {
-            Primary = "#1351B4",
+            Primary         = "#1351B4",
             PrimaryContrastText = "#FFFFFF",
-            Secondary = "#155BCB",
-            Background = "#F0F0F5",
-            Surface = "#FFFFFF",
-            Success = "#168821",
-            Warning = "#FFCD07",
-            Error = "#E52207",
-            TextPrimary = "#1B1B1B",
-            TextSecondary = "#636366",
-            Divider = "#C7C7CC",
-            TableHover = "rgba(19,81,180,.04)",
-            TableLines = "#E8E8E8",
+            Secondary       = "#2670E8",
+            Background      = "#F4F6FA",
+            Surface         = "#FFFFFF",
+            Success         = "#16A34A",
+            Warning         = "#D97706",
+            Error           = "#DC2626",
+            TextPrimary     = "#111827",
+            TextSecondary   = "#6B7280",
+            Divider         = "#E5E7EB",
+            TableHover      = "rgba(19,81,180,.04)",
+            TableLines      = "#F3F4F6",
         },
         LayoutProperties = new LayoutProperties
         {
-            DefaultBorderRadius = "4px",
+            DefaultBorderRadius = "8px",
         }
     };
 }

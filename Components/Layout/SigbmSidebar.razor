@@ -1,4 +1,4 @@
-@* Sidebar de navegação da barragem — MudBlazor NavMenu *@
+@* Sidebar de navegação da barragem — MudBlazor NavMenu com ícones *@
 
 <div class="sigbm-sidebar">
     <MudNavMenu>
@@ -9,53 +9,77 @@
             Dashboard
         </MudNavLink>
 
-        <MudNavGroup Title="Dados Básicos" Expanded="true">
-            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dados-iniciais")" Match="NavLinkMatch.All">Dados Iniciais</MudNavLink>
-            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dados-georreferenciados")" Match="NavLinkMatch.All">Dados Georreferenciados</MudNavLink>
-            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/processo-minerario")" Match="NavLinkMatch.All">Processo Minerário</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Características Técnicas</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Descaracterização</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Responsáveis Técnicos</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">ECJ</MudNavLink>
+        <MudNavGroup Title="Dados Básicos" Expanded="true" Icon="@Icons.Material.Outlined.FolderOpen">
+            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dados-iniciais")"
+                        Icon="@Icons.Material.Outlined.Description"
+                        Match="NavLinkMatch.All">
+                Dados Iniciais
+            </MudNavLink>
+            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dados-georreferenciados")"
+                        Icon="@Icons.Material.Outlined.Map"
+                        Match="NavLinkMatch.All">
+                Dados Georreferenciados
+            </MudNavLink>
+            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/processo-minerario")"
+                        Icon="@Icons.Material.Outlined.Business"
+                        Match="NavLinkMatch.All">
+                Processo Minerário
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Tune" Match="NavLinkMatch.All">
+                Características Técnicas
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.RemoveCircleOutline" Match="NavLinkMatch.All">
+                Descaracterização
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Engineering" Match="NavLinkMatch.All">
+                Responsáveis Técnicos
+            </MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Gavel" Match="NavLinkMatch.All">
+                ECJ
+            </MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="Estado de Conservação">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Documentação, Planos</MudNavLink>
+        <MudNavGroup Title="Estado de Conservação" Icon="@Icons.Material.Outlined.Shield">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Article" Match="NavLinkMatch.All">
+                Documentação, Planos
+            </MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="Dano Potencial">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Dano Potencial A.</MudNavLink>
+        <MudNavGroup Title="Dano Potencial" Icon="@Icons.Material.Outlined.Warning">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.ReportProblem" Match="NavLinkMatch.All">
+                Dano Potencial A.
+            </MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="Informações de Inspeção">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Dados Gerais</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Mancha de Inundação</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Regular (EIR)</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Especial (EIE)</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Conclusão de Inspeção Es.</MudNavLink>
+        <MudNavGroup Title="Informações de Inspeção" Icon="@Icons.Material.Outlined.Search">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Info" Match="NavLinkMatch.All">Dados Gerais</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Water" Match="NavLinkMatch.All">Mancha de Inundação</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.CheckCircleOutline" Match="NavLinkMatch.All">Regular (EIR)</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.AssignmentLate" Match="NavLinkMatch.All">Especial (EIE)</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Summarize" Match="NavLinkMatch.All">Conclusão de Inspeção Es.</MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="DCE">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">DCE/RISR</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">DCE/ECJ</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">DCE/RPSB</MudNavLink>
+        <MudNavGroup Title="DCE" Icon="@Icons.Material.Outlined.Assignment">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.FileCopy" Match="NavLinkMatch.All">DCE/RISR</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.FileCopy" Match="NavLinkMatch.All">DCE/ECJ</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.FileCopy" Match="NavLinkMatch.All">DCE/RPSB</MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="Plano de Emergência">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">DCO</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Plano de Emergência</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Acidentes/Incidentes</MudNavLink>
+        <MudNavGroup Title="Plano de Emergência" Icon="@Icons.Material.Outlined.LocalHospital">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.HealthAndSafety" Match="NavLinkMatch.All">DCO</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Emergency" Match="NavLinkMatch.All">Plano de Emergência</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Report" Match="NavLinkMatch.All">Acidentes/Incidentes</MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="Outros">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Classificação</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Pendências</MudNavLink>
+        <MudNavGroup Title="Outros" Icon="@Icons.Material.Outlined.MoreHoriz">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Category" Match="NavLinkMatch.All">Classificação</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.PendingActions" Match="NavLinkMatch.All">Pendências</MudNavLink>
         </MudNavGroup>
 
-        <MudNavGroup Title="Ações ANM">
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Histórico</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Autos/Ofícios</MudNavLink>
-            <MudNavLink Href="#" Match="NavLinkMatch.All">Histórico de Classificação</MudNavLink>
+        <MudNavGroup Title="Ações ANM" Icon="@Icons.Material.Outlined.AccountBalance">
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.History" Match="NavLinkMatch.All">Histórico</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Folder" Match="NavLinkMatch.All">Autos/Ofícios</MudNavLink>
+            <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Timeline" Match="NavLinkMatch.All">Histórico de Classificação</MudNavLink>
         </MudNavGroup>
 
     </MudNavMenu>
