@@ -1,0 +1,17 @@
+## .NET / Blazor
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.swp
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+
+## Publish output
+publish/
+out/

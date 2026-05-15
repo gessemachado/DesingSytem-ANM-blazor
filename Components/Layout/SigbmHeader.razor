@@ -1,0 +1,89 @@
+@* Header DSGOV — 3 linhas *@
+
+<header class="br-header" id="header">
+
+    <!-- Linha 1: barra gov.br compacta -->
+    <div class="header-top">
+        <div class="container-lg">
+            <div class="govbr-logo">
+                <span class="govbr-text">gov<span class="govbr-dot">.</span>br</span>
+            </div>
+            <div class="header-top-actions">
+                <div class="header-top-links">
+                    <a href="#">Acesso à Informação</a>
+                    <a href="#">Participe</a>
+                    <a href="#">Órgãos do Governo</a>
+                </div>
+                <span class="header-top-sep"></span>
+                <button class="br-button circle" type="button" aria-label="Alto contraste" title="Alto contraste"
+                        @onclick="ToggleContrast">
+                    <i class="fas fa-adjust"></i>
+                </button>
+                <div class="br-sign-in">
+                    <button class="br-button sign-in" type="button">
+                        <i class="fas fa-user"></i> @NomeUsuario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Linha 2: identidade do sistema + busca -->
+    <div class="header-main">
+        <div class="container-lg">
+            <div class="header-identity">
+                <button class="header-menu-btn" type="button" aria-label="Menu principal">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-sign">
+                    <span class="header-sign-title">SIGBM</span>
+                    <span class="header-sign-subtitle">Sistema Integrado de Gestão de Barragens de Mineração</span>
+                </div>
+            </div>
+            <div class="header-search-box">
+                <div class="br-input has-icon">
+                    <input type="text" @bind="SearchTerm" @bind:event="oninput"
+                           placeholder="O que você procura?" aria-label="Pesquisar" />
+                    <button class="br-button circle" type="button" aria-label="Pesquisar">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Linha 3: nav principal -->
+    <div class="header-nav">
+        <div class="container-lg">
+            <nav class="header-menu" aria-label="Menu principal">
+                <ul class="br-list horizontal">
+                    <li class="br-item @(ActiveMenu == "gerenciar" ? "active" : "")">
+                        <a href="/barragens">Gerenciar</a>
+                    </li>
+                    <li class="br-item @(ActiveMenu == "paineis" ? "active" : "")">
+                        <a href="#">Painéis</a>
+                    </li>
+                    <li class="br-item @(ActiveMenu == "manuais" ? "active" : "")">
+                        <a href="#">Manuais</a>
+                    </li>
+                    <li class="br-item @(ActiveMenu == "configuracao" ? "active" : "")">
+                        <a href="#">Configuração</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</header>
+
+@code {
+    [Parameter] public string ActiveMenu { get; set; } = "gerenciar";
+    [Parameter] public string NomeUsuario { get; set; } = "Usuário Fulano";
+
+    private string SearchTerm = string.Empty;
+
+    private void ToggleContrast()
+    {
+        // Implementar alto contraste via JS interop futuramente
+    }
+}

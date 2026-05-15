@@ -1,0 +1,68 @@
+@* Sidebar de navegação da barragem — MudBlazor NavMenu *@
+
+<div class="sigbm-sidebar">
+    <MudNavMenu>
+
+        <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dashboard")"
+                    Icon="@Icons.Material.Outlined.Dashboard"
+                    Match="NavLinkMatch.All">
+            Dashboard
+        </MudNavLink>
+
+        <MudNavGroup Title="Dados Básicos" Expanded="true">
+            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dados-iniciais")" Match="NavLinkMatch.All">Dados Iniciais</MudNavLink>
+            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/dados-georreferenciados")" Match="NavLinkMatch.All">Dados Georreferenciados</MudNavLink>
+            <MudNavLink Href="@($"/barragem/{NumeroCadastro}/processo-minerario")" Match="NavLinkMatch.All">Processo Minerário</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Características Técnicas</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Descaracterização</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Responsáveis Técnicos</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">ECJ</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="Estado de Conservação">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Documentação, Planos</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="Dano Potencial">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Dano Potencial A.</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="Informações de Inspeção">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Dados Gerais</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Mancha de Inundação</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Regular (EIR)</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Especial (EIE)</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Conclusão de Inspeção Es.</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="DCE">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">DCE/RISR</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">DCE/ECJ</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">DCE/RPSB</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="Plano de Emergência">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">DCO</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Plano de Emergência</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Acidentes/Incidentes</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="Outros">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Classificação</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Pendências</MudNavLink>
+        </MudNavGroup>
+
+        <MudNavGroup Title="Ações ANM">
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Histórico</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Autos/Ofícios</MudNavLink>
+            <MudNavLink Href="#" Match="NavLinkMatch.All">Histórico de Classificação</MudNavLink>
+        </MudNavGroup>
+
+    </MudNavMenu>
+</div>
+
+@code {
+    [Parameter] public int NumeroCadastro { get; set; } = 9999;
+    [Parameter] public string NomeBarragem { get; set; } = "Barragem A";
+    [Parameter] public string NomeEmpresa { get; set; } = "Empresa A";
+}

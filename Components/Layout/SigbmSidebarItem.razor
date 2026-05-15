@@ -1,0 +1,13 @@
+@* Item de navegação da sidebar com suporte a rota ativa *@
+@inject NavigationManager Nav
+
+<NavLink class="snav__item" href="@Href" Match="NavLinkMatch.All">
+    @Label
+    <span class="snav__dot @(Done ? "snav__dot--done" : "")"></span>
+</NavLink>
+
+@code {
+    [Parameter] public string Href { get; set; } = "#";
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public bool Done { get; set; } = false;
+}

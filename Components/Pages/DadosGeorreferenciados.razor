@@ -1,0 +1,132 @@
+@page "/barragem/{Id:int}/dados-georreferenciados"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+@inject ISnackbar Snackbar
+@inject IJSRuntime JS
+
+<PageTitle>Dados Georreferenciados — SIGBM</PageTitle>
+
+<div style="padding:16px 24px 0;">
+    <MudBreadcrumbs Items="_crumbs" />
+    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
+    <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
+</div>
+
+<div class="page-wrap">
+    <SigbmSidebar NumeroCadastro="@Id" />
+
+    <main class="page-main">
+
+        <!-- Localização geográfica -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Localização Geográfica</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
+                Coordenadas da estrutura principal
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Lat" Label="Latitude" Required="true"
+                                  Placeholder="Ex: -19.921"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Lng" Label="Longitude" Required="true"
+                                  Placeholder="Ex: -43.938"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Alt" Label="Altitude (m)"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+            </MudGrid>
+            <!-- Placeholder do mapa -->
+            <div class="mapa-placeholder mt-4">
+                <MudIcon Icon="@Icons.Material.Filled.Map" Style="font-size:40px;opacity:.7;margin-right:8px;" />
+                <MudText>Mapa (Leaflet/Google Maps)</MudText>
+            </div>
+        </MudPaper>
+
+        <!-- Pontos georreferenciados -->
+        <MudPaper Elevation="1" Style="border-radius:8px;overflow:hidden;" Class="mb-4">
+            <MudTable T="PontoGeo" Items="@Pontos" Hover="true" Elevation="0">
+                <ToolBarContent>
+                    <MudText Typo="Typo.subtitle2">Pontos Georreferenciados</MudText>
+                    <MudSpacer />
+                    <MudButton Variant="Variant.Outlined" Size="Size.Small"
+                               StartIcon="@Icons.Material.Filled.Add" @onclick="AdicionarPonto">
+                        Adicionar ponto
+                    </MudButton>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Ponto</MudTh>
+                    <MudTh>Latitude</MudTh>
+                    <MudTh>Longitude</MudTh>
+                    <MudTh>Altitude (m)</MudTh>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>@context.Nome</MudTd>
+                    <MudTd>@context.Lat</MudTd>
+                    <MudTd>@context.Lng</MudTd>
+                    <MudTd>@context.Alt</MudTd>
+                    <MudTd>@context.Tipo</MudTd>
+                    <MudTd>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small"
+                                       Color="Color.Error"
+                                       OnClick="@(() => RemoverPonto(context))" />
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudPaper>
+
+        <!-- Ações -->
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Outlined"
+                       @onclick='() => Nav.NavigateTo($"/barragem/{Id}/dados-iniciais")'>
+                Voltar
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Save" @onclick="Salvar">
+                Salvar
+            </MudButton>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; } = 9999;
+
+    private string Lat = "-19.921";
+    private string Lng = "-43.938";
+    private string Alt = "850";
+
+    private List<BreadcrumbItem> _crumbs =
+    [
+        new("Início", href: "/", icon: Icons.Material.Filled.Home),
+        new("Minhas Barragens", href: "/barragens"),
+        new("Barragem #9999", href: null, disabled: false),
+        new("Dados Georreferenciados", href: null, disabled: true),
+    ];
+
+    private List<PontoGeo> Pontos =
+    [
+        new("P-01", "-19.921", "-43.938", "850", "Eixo da barragem"),
+        new("P-02", "-19.924", "-43.940", "845", "Margem esquerda"),
+        new("P-03", "-19.918", "-43.935", "848", "Margem direita"),
+    ];
+
+    private void AdicionarPonto() =>
+        Pontos.Add(new($"P-0{Pontos.Count + 1}", Lat, Lng, Alt, "Novo"));
+
+    private async Task RemoverPonto(PontoGeo p)
+    {
+        if (await JS.InvokeAsync<bool>("confirm", $"Deseja remover o ponto {p.Nome}?"))
+            Pontos.Remove(p);
+    }
+
+    private void Salvar() => Snackbar.Add("Dados georreferenciados salvos!", Severity.Success);
+
+    private record PontoGeo(string Nome, string Lat, string Lng, string Alt, string Tipo);
+}

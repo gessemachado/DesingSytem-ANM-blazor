@@ -1,0 +1,110 @@
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<MudThemeProvider Theme="@_theme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+
+    <MudAppBar Fixed="true" Class="sigbm-appbar" Elevation="2" Style="background:#fff;height:auto;">
+
+        <!-- Linha 1: gov.br (40px) -->
+        <div class="govbr-top">
+            <span class="govbr-brand">gov<span class="govbr-dot">.</span>br</span>
+            <div class="govbr-top-right">
+                <MudLink Href="#" Underline="Underline.None">Acesso à Informação</MudLink>
+                <MudText Style="color:rgba(255,255,255,.3);padding:0 6px;">|</MudText>
+                <MudLink Href="#" Underline="Underline.None">Participe</MudLink>
+                <MudText Style="color:rgba(255,255,255,.3);padding:0 6px;">|</MudText>
+                <MudLink Href="#" Underline="Underline.None">Órgãos do Governo</MudLink>
+                <MudIconButton Icon="@Icons.Material.Outlined.Contrast" Size="Size.Small" Style="margin-left:8px;" />
+                <MudButton StartIcon="@Icons.Material.Filled.Person" Size="Size.Small" Variant="Variant.Text">
+                    Usuário Fulano
+                </MudButton>
+            </div>
+        </div>
+
+        <!-- Linha 2: identidade + busca (64px) -->
+        <div class="govbr-main">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Default" />
+            <div class="sigbm-brand-block">
+                <span class="sigbm-brand-title">SIGBM</span>
+                <span class="sigbm-brand-sub">Sistema Integrado de Gestão de Barragens de Mineração</span>
+            </div>
+            <MudSpacer />
+            <MudTextField T="string" Placeholder="O que você procura?" Variant="Variant.Outlined"
+                          Margin="Margin.Dense" Adornment="Adornment.End"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          Style="max-width:320px;background:#fff;" />
+        </div>
+
+        <!-- Linha 3: menu (48px) -->
+        <div class="govbr-nav">
+            <MudButton Href="/barragens" Variant="Variant.Text"
+                       Class="@(Nav.Uri.Contains("/barragem") ? "govbr-nav-active" : "")">
+                Gerenciar
+            </MudButton>
+            <MudButton Href="#" Variant="Variant.Text">Painéis</MudButton>
+            <MudButton Href="#" Variant="Variant.Text">Manuais</MudButton>
+            <MudButton Href="#" Variant="Variant.Text">Configuração</MudButton>
+        </div>
+
+    </MudAppBar>
+
+    <MudMainContent Style="background:#F0F0F5;min-height:100vh;">
+
+        @Body
+
+        <!-- Footer gov.br -->
+        <div class="govbr-footer">
+            <div style="max-width:1280px;margin:0 auto;">
+                <div class="govbr-footer-brand">gov<span class="govbr-dot">.</span>br</div>
+                <div>
+                    <MudLink Href="#" Underline="Underline.None">Acessibilidade</MudLink>
+                    <MudLink Href="#" Underline="Underline.None">Mapa do site</MudLink>
+                    <MudLink Href="#" Underline="Underline.None">Termos de uso</MudLink>
+                    <MudLink Href="#" Underline="Underline.None">Ouvidoria</MudLink>
+                </div>
+                <MudText Typo="Typo.caption" Style="color:rgba(255,255,255,.5);margin-top:12px;display:block;">
+                    Ministério de Minas e Energia · Agência Nacional de Mineração — ANM<br />
+                    © @DateTime.Now.Year ANM — Todos os direitos reservados
+                </MudText>
+            </div>
+        </div>
+
+    </MudMainContent>
+
+</MudLayout>
+
+<div id="blazor-error-ui" data-nosnippet>
+    Ocorreu um erro inesperado. <a href="." class="reload">Recarregar</a>
+    <span class="dismiss">✕</span>
+</div>
+
+@code {
+    private MudTheme _theme = new MudTheme
+    {
+        PaletteLight = new PaletteLight
+        {
+            Primary = "#1351B4",
+            PrimaryContrastText = "#FFFFFF",
+            Secondary = "#155BCB",
+            Background = "#F0F0F5",
+            Surface = "#FFFFFF",
+            Success = "#168821",
+            Warning = "#FFCD07",
+            Error = "#E52207",
+            TextPrimary = "#1B1B1B",
+            TextSecondary = "#636366",
+            Divider = "#C7C7CC",
+            TableHover = "rgba(19,81,180,.04)",
+            TableLines = "#E8E8E8",
+        },
+        LayoutProperties = new LayoutProperties
+        {
+            DefaultBorderRadius = "4px",
+        }
+    };
+}

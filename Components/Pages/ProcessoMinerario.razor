@@ -1,0 +1,134 @@
+@page "/barragem/{Id:int}/processo-minerario"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+@inject ISnackbar Snackbar
+@inject IJSRuntime JS
+
+<PageTitle>Processo Minerário — SIGBM</PageTitle>
+
+@if (MostrarAlerta)
+{
+    <MudAlert Severity="Severity.Warning" Class="sigbm-alert" Dense="true"
+              ShowCloseIcon="true" CloseIconClicked="@(() => MostrarAlerta = false)">
+        <strong>Atenção.</strong> Faltam 30 dias para finalizar o cadastro desta estrutura.
+    </MudAlert>
+}
+
+<div style="padding:16px 24px 0;">
+    <MudBreadcrumbs Items="_crumbs" />
+    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
+    <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
+</div>
+
+<div class="page-wrap">
+    <SigbmSidebar NumeroCadastro="@Id" />
+
+    <main class="page-main">
+
+        <!-- Vincular processo -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Vincular Processo Minerário</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
+                Informe o número do processo ANM para vincular
+            </MudText>
+            <div class="add-row">
+                <MudTextField @bind-Value="NovoProcesso" Label="Número do Processo (SCUP)"
+                              Placeholder="Ex: 800.000/2020"
+                              Variant="Variant.Outlined" Margin="Margin.Dense" Style="flex:1;" />
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Link"
+                           @onclick="VincularProcesso" Style="margin-bottom:2px;">
+                    Vincular
+                </MudButton>
+            </div>
+        </MudPaper>
+
+        <!-- Tabela de processos -->
+        <MudPaper Elevation="1" Style="border-radius:8px;overflow:hidden;" Class="mb-4">
+            <MudTable T="ProcessoItem" Items="@Processos" Hover="true" Elevation="0" Dense="false">
+                <ToolBarContent>
+                    <MudText Typo="Typo.subtitle2">Processos vinculados (@Processos.Count)</MudText>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Processo</MudTh>
+                    <MudTh>Substância</MudTh>
+                    <MudTh>Fase</MudTh>
+                    <MudTh>Área (ha)</MudTh>
+                    <MudTh>UF</MudTh>
+                    <MudTh>Município</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd><MudLink Href="#">@context.Numero</MudLink></MudTd>
+                    <MudTd>@context.Substancia</MudTd>
+                    <MudTd>
+                        <MudChip T="string" Size="Size.Small" Class="chip-andamento">
+                            @context.Fase
+                        </MudChip>
+                    </MudTd>
+                    <MudTd>@context.Area</MudTd>
+                    <MudTd>@context.UF</MudTd>
+                    <MudTd>@context.Municipio</MudTd>
+                    <MudTd>
+                        <MudIconButton Icon="@Icons.Material.Filled.LinkOff" Size="Size.Small"
+                                       Color="Color.Error"
+                                       OnClick="@(() => DesvinculaProcesso(context))" />
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudPaper>
+
+        <!-- Ações -->
+        <div class="d-flex justify-end gap-2">
+            <MudButton Variant="Variant.Outlined"
+                       @onclick='() => Nav.NavigateTo($"/barragem/{Id}/dados-iniciais")'>
+                Voltar
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Save" @onclick="Salvar">
+                Salvar
+            </MudButton>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; } = 9999;
+
+    private bool MostrarAlerta = true;
+    private string NovoProcesso = "";
+
+    private List<BreadcrumbItem> _crumbs =
+    [
+        new("Início", href: "/", icon: Icons.Material.Filled.Home),
+        new("Minhas Barragens", href: "/barragens"),
+        new("Barragem #9999", href: null, disabled: false),
+        new("Processo Minerário", href: null, disabled: true),
+    ];
+
+    private List<ProcessoItem> Processos =
+    [
+        new("800.001/2018", "Ferro", "Concessão de Lavra",       "1.234,56", "MG", "Congonhas"),
+        new("800.002/2020", "Ouro",  "Autorização de Pesquisa",  "345,00",   "MG", "Mariana"),
+    ];
+
+    private void VincularProcesso()
+    {
+        if (!string.IsNullOrWhiteSpace(NovoProcesso))
+        {
+            Processos.Add(new(NovoProcesso, "—", "Em análise", "0,00", "—", "—"));
+            NovoProcesso = "";
+        }
+    }
+
+    private async Task DesvinculaProcesso(ProcessoItem p)
+    {
+        if (await JS.InvokeAsync<bool>("confirm", $"Deseja desvincular o processo {p.Numero}?"))
+            Processos.Remove(p);
+    }
+
+    private void Salvar() => Snackbar.Add("Processos salvos com sucesso!", Severity.Success);
+
+    private record ProcessoItem(string Numero, string Substancia, string Fase, string Area, string UF, string Municipio);
+}

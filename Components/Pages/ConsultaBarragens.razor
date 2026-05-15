@@ -1,0 +1,167 @@
+@page "/barragens"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+
+<PageTitle>Minhas Barragens — SIGBM</PageTitle>
+
+<div style="padding:24px;max-width:1280px;margin:0 auto;">
+
+    <MudBreadcrumbs Items="_crumbs" />
+
+    <div class="d-flex justify-space-between align-center mt-2 mb-4">
+        <MudText Typo="Typo.h5">Minhas Barragens</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.Add"
+                   Href="/barragem/nova">
+            Nova barragem
+        </MudButton>
+    </div>
+
+    <!-- KPI cards -->
+    <div class="kpi-row">
+        <div class="kpi-card">
+            <MudIcon Icon="@Icons.Material.Filled.Water" Color="Color.Primary" Style="font-size:32px;" />
+            <div>
+                <MudText Typo="Typo.h4" Color="Color.Primary">@Barragens.Count</MudText>
+                <MudText Typo="Typo.caption" Style="color:#636366;">Total de Barragens</MudText>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <MudIcon Icon="@Icons.Material.Filled.HourglassEmpty" Style="font-size:32px;color:#D97706;" />
+            <div>
+                <MudText Typo="Typo.h4" Style="color:#D97706;">@Barragens.Count(b => b.Status == "andamento")</MudText>
+                <MudText Typo="Typo.caption" Style="color:#636366;">Em Andamento</MudText>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Style="font-size:32px;color:#DC2626;" />
+            <div>
+                <MudText Typo="Typo.h4" Style="color:#DC2626;">@Barragens.Count(b => b.Status == "pendente")</MudText>
+                <MudText Typo="Typo.caption" Style="color:#636366;">Pendentes</MudText>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <MudPaper Elevation="1" Class="pa-4 mb-2" Style="border-radius:8px;">
+        <MudText Typo="Typo.subtitle2" Class="mb-3" Style="font-weight:600;color:#636366;">Filtros</MudText>
+        <MudGrid>
+            <MudItem xs="12" md="5">
+                <MudTextField T="string" @bind-Value="FiltroTexto"
+                              Label="Busca" Placeholder="Nome da barragem ou empresa…"
+                              Variant="Variant.Outlined" Margin="Margin.Dense"
+                              Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudSelect T="string" @bind-Value="FiltroStatus" Label="Status"
+                           Variant="Variant.Outlined" Margin="Margin.Dense">
+                    <MudSelectItem T="string" Value="@("")">Todos</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("andamento")">Em andamento</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("concluido")">Concluído</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("pendente")">Pendente</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="6" md="2">
+                <MudSelect T="string" @bind-Value="FiltroRisco" Label="Risco"
+                           Variant="Variant.Outlined" Margin="Margin.Dense">
+                    <MudSelectItem T="string" Value="@("")">Todos</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("alto")">Alto</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("medio")">Médio</MudSelectItem>
+                    <MudSelectItem T="string" Value="@("baixo")">Baixo</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="2" Class="d-flex align-end gap-2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                           StartIcon="@Icons.Material.Filled.Search" FullWidth="true">
+                    Filtrar
+                </MudButton>
+                <MudIconButton Icon="@Icons.Material.Filled.ClearAll" Variant="Variant.Outlined"
+                               @onclick="LimparFiltros" />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <!-- Tabela -->
+    <MudTable T="BarragemItem" Items="@BarragensFiltradas" Hover="true"
+              RowsPerPage="@ItensPorPagina" Elevation="1" Style="border-radius:8px;overflow:hidden;">
+        <ToolBarContent>
+            <MudText Typo="Typo.subtitle2">@BarragensFiltradas.Count() resultado(s)</MudText>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>Nº Cadastro</MudTh>
+            <MudTh>Nome da Barragem</MudTh>
+            <MudTh>Empresa</MudTh>
+            <MudTh>UF</MudTh>
+            <MudTh>Risco</MudTh>
+            <MudTh>Status</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nº Cadastro">
+                <MudLink Href="@($"/barragem/{context.Id}/dados-iniciais")">#@context.Id</MudLink>
+            </MudTd>
+            <MudTd DataLabel="Nome">@context.Nome</MudTd>
+            <MudTd DataLabel="Empresa">@context.Empresa</MudTd>
+            <MudTd DataLabel="UF">@context.UF</MudTd>
+            <MudTd DataLabel="Risco">
+                <MudChip T="string" Size="Size.Small" Class="@($"chip-{context.Risco}")">
+                    @context.RiscoLabel
+                </MudChip>
+            </MudTd>
+            <MudTd DataLabel="Status">
+                <MudChip T="string" Size="Size.Small" Class="@($"chip-{context.Status}")">
+                    @context.StatusLabel
+                </MudChip>
+            </MudTd>
+            <MudTd>
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small"
+                               @onclick="() => IrParaBarragem(context.Id)" />
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility" Size="Size.Small" />
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10,25,50}" />
+        </PagerContent>
+    </MudTable>
+
+</div>
+
+@code {
+    private string FiltroTexto = "";
+    private string FiltroStatus = "";
+    private string FiltroRisco = "";
+    private int ItensPorPagina = 10;
+
+    private List<BreadcrumbItem> _crumbs =
+    [
+        new("Início", href: "/", icon: Icons.Material.Filled.Home),
+        new("Gerenciar", href: null, disabled: true),
+        new("Minhas Barragens", href: null, disabled: true),
+    ];
+
+    private List<BarragemItem> Barragens =
+    [
+        new(9999, "Barragem A", "Empresa A", "MG", "alto",  "andamento"),
+        new(9998, "Barragem B", "Empresa B", "PA", "medio", "concluido"),
+        new(9997, "Barragem C", "Empresa A", "GO", "baixo", "pendente"),
+        new(9996, "Barragem D", "Empresa C", "MG", "alto",  "andamento"),
+    ];
+
+    private IEnumerable<BarragemItem> BarragensFiltradas =>
+        Barragens.Where(b =>
+            (string.IsNullOrEmpty(FiltroTexto) ||
+             b.Nome.Contains(FiltroTexto, StringComparison.OrdinalIgnoreCase) ||
+             b.Empresa.Contains(FiltroTexto, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrEmpty(FiltroStatus) || b.Status == FiltroStatus) &&
+            (string.IsNullOrEmpty(FiltroRisco)  || b.Risco  == FiltroRisco));
+
+    private void LimparFiltros() { FiltroTexto = ""; FiltroStatus = ""; FiltroRisco = ""; }
+
+    private void IrParaBarragem(int id) => Nav.NavigateTo($"/barragem/{id}/dados-iniciais");
+
+    private record BarragemItem(int Id, string Nome, string Empresa, string UF, string Risco, string Status)
+    {
+        public string RiscoLabel => Risco switch { "alto" => "Alto", "medio" => "Médio", "baixo" => "Baixo", _ => Risco };
+        public string StatusLabel => Status switch { "andamento" => "Em andamento", "concluido" => "Concluído", "pendente" => "Pendente", _ => Status };
+    }
+}

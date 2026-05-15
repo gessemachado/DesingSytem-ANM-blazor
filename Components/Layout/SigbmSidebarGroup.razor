@@ -1,0 +1,16 @@
+@* Grupo colapsável da sidebar *@
+
+<div class="snav__group-label @(Expanded ? "" : "collapsed")" @onclick="Toggle">
+    @Label <i class="fas fa-chevron-down"></i>
+</div>
+<div class="snav__group-items @(Expanded ? "" : "collapsed")">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "";
+    [Parameter] public bool Expanded { get; set; } = false;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private void Toggle() => Expanded = !Expanded;
+}

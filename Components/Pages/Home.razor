@@ -1,0 +1,9 @@
+@page "/"
+
+<PageTitle>SIGBM — Início</PageTitle>
+
+@code {
+    [Inject] private NavigationManager Nav { get; set; } = default!;
+
+    protected override void OnInitialized() => Nav.NavigateTo("/barragens");
+}

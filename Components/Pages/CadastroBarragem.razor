@@ -1,0 +1,171 @@
+@page "/barragem/{Id:int}/dados-iniciais"
+@page "/barragem/nova"
+@rendermode InteractiveServer
+@inject NavigationManager Nav
+@inject ISnackbar Snackbar
+
+<PageTitle>Dados Iniciais — SIGBM</PageTitle>
+
+@if (MostrarAlerta)
+{
+    <MudAlert Severity="Severity.Warning" Class="sigbm-alert" Dense="true"
+              ShowCloseIcon="true" CloseIconClicked="@(() => MostrarAlerta = false)">
+        <strong>Atenção.</strong> Faltam 30 dias para finalizar o cadastro da estrutura @Model.NomeBarragem.
+        O cadastro foi iniciado em 15/01/25 com prazo para conclusão até 14/02/25.
+    </MudAlert>
+}
+
+<div style="padding:16px 24px 0;">
+    <MudBreadcrumbs Items="_crumbs" />
+    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — @Model.NomeBarragem</MudText>
+    <MudText Typo="Typo.caption" Class="page-heading-company">@Model.Empresa · @Model.CNPJ</MudText>
+</div>
+
+<div class="page-wrap">
+    <SigbmSidebar NumeroCadastro="@Id" NomeBarragem="@Model.NomeBarragem" NomeEmpresa="@Model.Empresa" />
+
+    <main class="page-main">
+
+        <!-- Identificação -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;">Identificação da Barragem</MudText>
+            <MudText Typo="Typo.caption" Style="color:#636366;display:block;margin-bottom:16px;">
+                Informações básicas de identificação
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.NomeBarragem" Label="Nome da Barragem"
+                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.Empresa" Label="Empresa Responsável"
+                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Model.CNPJ" Label="CNPJ"
+                                  Required="true" Placeholder="00.000.000/0000-00"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="string" @bind-Value="Model.UF" Label="UF"
+                               Required="true" Variant="Variant.Outlined" Margin="Margin.Dense">
+                        <MudSelectItem T="string" Value="@("")">Selecione…</MudSelectItem>
+                        @foreach (var uf in UFs)
+                        {
+                            <MudSelectItem T="string" Value="@uf">@uf</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Localização -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;display:block;margin-bottom:16px;">
+                Localização
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.Municipio" Label="Município"
+                                  Required="true" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.BaciaHidrografica" Label="Bacia Hidrográfica"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudTextField @bind-Value="Model.SubBacia" Label="Sub-bacia"
+                                  Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Diques -->
+        <MudPaper Elevation="1" Class="pa-4 mb-4" Style="border-radius:8px;">
+            <MudText Typo="Typo.subtitle1" Style="font-weight:600;display:block;margin-bottom:16px;">
+                Quantidade de Diques Internos
+                <MudTooltip Text="Caso não tenha nenhum dique interno, informe 0">
+                    <MudIcon Icon="@Icons.Material.Outlined.HelpOutline" Size="Size.Small"
+                             Style="vertical-align:middle;color:#636366;margin-left:4px;" />
+                </MudTooltip>
+            </MudText>
+            <MudGrid>
+                <MudItem xs="12" md="3">
+                    <MudNumericField @bind-Value="Model.QuantidadeDiques" Label="Quantidade"
+                                     Required="true" Min="0"
+                                     Variant="Variant.Outlined" Margin="Margin.Dense" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        <!-- Ações -->
+        <div class="d-flex justify-end gap-2 mt-2">
+            <MudButton Variant="Variant.Outlined" @onclick="Cancelar">Cancelar</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Save"
+                       @onclick="Salvar" Disabled="@Salvando">
+                @(Salvando ? "Salvando…" : "Salvar")
+            </MudButton>
+        </div>
+
+    </main>
+</div>
+
+@code {
+    [Parameter] public int Id { get; set; } = 9999;
+
+    private bool MostrarAlerta = true;
+    private bool Salvando = false;
+    private BarragemModel Model = new();
+
+    private List<BreadcrumbItem> _crumbs =
+    [
+        new("Início", href: "/", icon: Icons.Material.Filled.Home),
+        new("Minhas Barragens", href: "/barragens"),
+        new("Dados Iniciais", href: null, disabled: true),
+    ];
+
+    private static readonly string[] UFs =
+    [
+        "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA",
+        "MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN",
+        "RS","RO","RR","SC","SP","SE","TO"
+    ];
+
+    protected override void OnParametersSet()
+    {
+        if (Id > 0)
+            Model = new BarragemModel
+            {
+                NomeBarragem = "Barragem A",
+                Empresa = "Empresa A",
+                CNPJ = "00.000.000/0000-00",
+                UF = "MG",
+                Municipio = "Belo Horizonte",
+                BaciaHidrografica = "Rio Doce",
+                QuantidadeDiques = 0
+            };
+    }
+
+    private async Task Salvar()
+    {
+        Salvando = true;
+        await Task.Delay(800);
+        Salvando = false;
+        Snackbar.Add("Dados salvos com sucesso!", Severity.Success);
+    }
+
+    private void Cancelar() => Nav.NavigateTo("/barragens");
+
+    private class BarragemModel
+    {
+        public string NomeBarragem { get; set; } = "";
+        public string Empresa { get; set; } = "";
+        public string CNPJ { get; set; } = "";
+        public string UF { get; set; } = "";
+        public string Municipio { get; set; } = "";
+        public string BaciaHidrografica { get; set; } = "";
+        public string SubBacia { get; set; } = "";
+        public int QuantidadeDiques { get; set; } = 0;
+    }
+}
