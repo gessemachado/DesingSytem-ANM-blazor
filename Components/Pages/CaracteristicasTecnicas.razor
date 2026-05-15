@@ -6,16 +6,16 @@
 
 <PageTitle>Características Técnicas — SIGBM</PageTitle>
 
-<div style="padding:16px 24px 0;">
-    <MudBreadcrumbs Items="_crumbs" />
-    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
-    <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
-</div>
-
 <div class="page-wrap">
     <SigbmSidebar NumeroCadastro="@Id" />
 
     <main class="page-main">
+
+        <div class="page-heading-wrap">
+            <MudBreadcrumbs Items="_crumbs" />
+            <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
+            <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
+        </div>
 
         <MudPaper Elevation="1" Style="border-radius:8px;overflow:hidden;" Class="mb-4">
             <MudTabs Elevation="0" Rounded="false" ApplyEffectsToContainer="true">

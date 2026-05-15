@@ -14,16 +14,16 @@
     </MudAlert>
 }
 
-<div style="padding:16px 24px 0;">
-    <MudBreadcrumbs Items="_crumbs" />
-    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
-    <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
-</div>
-
 <div class="page-wrap">
     <SigbmSidebar NumeroCadastro="@Id" />
 
     <main class="page-main">
+
+        <div class="page-heading-wrap">
+            <MudBreadcrumbs Items="_crumbs" />
+            <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — Barragem A</MudText>
+            <MudText Typo="Typo.caption" Class="page-heading-company">Empresa A · 00.000.000/0000-00</MudText>
+        </div>
 
         <!-- Vincular processo -->
         <MudPaper Elevation="1" Class="pa-5 mb-4" Style="border-radius:8px;">

@@ -113,7 +113,7 @@
 
 /* ── Page wrap ── */
 .page-wrap { display: flex; align-items: flex-start; }
-.page-main { flex: 1; min-width: 0; padding: 28px 32px; }
+.page-main { flex: 1; min-width: 0; padding: 12px 32px 32px; }
 
 /* ── Sidebar ── */
 .sigbm-sidebar {
@@ -175,6 +175,7 @@
 .field-tag--pnsb { background: #FEF08A; color: #713F12; }
 
 /* ── Heading da barragem ── */
+.page-heading-wrap { margin-bottom: 20px; }
 .page-heading-id { font-size: 20px; font-weight: 700; color: #111827; }
 .page-heading-company { font-size: 13px; color: #6B7280; margin-top: 2px; }
 

@@ -6,16 +6,16 @@
 
 <PageTitle>Dados Iniciais — SIGBM</PageTitle>
 
-<div style="padding:16px 24px 0;">
-    <MudBreadcrumbs Items="_crumbs" />
-    <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — @Model.NomeBarragem</MudText>
-    <MudText Typo="Typo.caption" Class="page-heading-company">@Model.Empresa · @Model.CNPJ</MudText>
-</div>
-
 <div class="page-wrap">
     <SigbmSidebar NumeroCadastro="@Id" NomeBarragem="@Model.NomeBarragem" NomeEmpresa="@Model.Empresa" />
 
     <main class="page-main">
+
+        <div class="page-heading-wrap">
+            <MudBreadcrumbs Items="_crumbs" />
+            <MudText Typo="Typo.h6" Class="page-heading-id">#@Id — @Model.NomeBarragem</MudText>
+            <MudText Typo="Typo.caption" Class="page-heading-company">@Model.Empresa · @Model.CNPJ</MudText>
+        </div>
 
         <!-- ── Empreendedor responsável ── -->
         <MudPaper Elevation="1" Class="mb-4" Style="border-radius:8px;overflow:hidden;">
